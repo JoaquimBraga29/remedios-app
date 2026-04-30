@@ -7,526 +7,153 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #f7f9fc;
-      --surface: #ffffff;
-      --surface2: #f0f4f9;
-      --border: #e2e8f0;
-      --primary: #2563eb;
-      --primary-light: #eff6ff;
-      --primary-dark: #1d4ed8;
-      --text: #0f172a;
-      --text-muted: #64748b;
-      --text-light: #94a3b8;
-      --danger: #ef4444;
-      --danger-light: #fef2f2;
-      --warning: #f59e0b;
-      --warning-light: #fffbeb;
-      --success: #10b981;
-      --success-light: #ecfdf5;
-      --radius: 12px;
-      --radius-sm: 8px;
+      --bg: #f7f9fc; --surface: #ffffff; --surface2: #f0f4f9; --border: #e2e8f0;
+      --primary: #2563eb; --primary-light: #eff6ff; --primary-dark: #1d4ed8;
+      --text: #0f172a; --text-muted: #64748b; --text-light: #94a3b8;
+      --danger: #ef4444; --danger-light: #fef2f2;
+      --warning: #f59e0b; --warning-light: #fffbeb;
+      --success: #10b981; --success-light: #ecfdf5;
+      --radius: 12px; --radius-sm: 8px;
       --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.04);
       --shadow-lg: 0 8px 32px rgba(0,0,0,0.10);
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; font-size: 15px; }
 
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      font-size: 15px;
-    }
-
-    /* ---- HEADER ---- */
-    header {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
-      height: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 1px 0 var(--border);
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .logo-icon {
-      width: 36px;
-      height: 36px;
-      background: var(--primary);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-    }
-
-    .logo-text {
-      font-family: 'DM Serif Display', serif;
-      font-size: 20px;
-      color: var(--text);
-      letter-spacing: -0.3px;
-    }
-
-    .logo-sub {
-      font-size: 12px;
-      color: var(--text-muted);
-      font-weight: 400;
-    }
-
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .edit-badge {
-      display: none;
-      align-items: center;
-      gap: 6px;
-      background: var(--success-light);
-      color: var(--success);
-      border: 1px solid #a7f3d0;
-      border-radius: 20px;
-      padding: 4px 12px;
-      font-size: 12px;
-      font-weight: 600;
-    }
-
+    header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 20px; height: 64px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+    .logo { display: flex; align-items: center; gap: 10px; }
+    .logo-icon { width: 36px; height: 36px; background: var(--primary); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+    .logo-text { font-family: 'DM Serif Display', serif; font-size: 20px; letter-spacing: -0.3px; }
+    .logo-sub { font-size: 12px; color: var(--text-muted); }
+    .header-right { display: flex; align-items: center; gap: 8px; }
+    .edit-badge { display: none; align-items: center; background: var(--success-light); color: var(--success); border: 1px solid #a7f3d0; border-radius: 20px; padding: 4px 10px; font-size: 12px; font-weight: 600; }
     .edit-badge.visible { display: flex; }
 
-    btn-edit-mode {
-      display: inline-flex;
-    }
-
-    /* ---- BUTTONS ---- */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      border: none;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      font-family: inherit;
-      font-weight: 500;
-      transition: all 0.15s;
-      text-decoration: none;
-      white-space: nowrap;
-    }
-
+    .btn { display: inline-flex; align-items: center; gap: 6px; border: none; border-radius: var(--radius-sm); cursor: pointer; font-family: inherit; font-weight: 500; transition: all 0.15s; white-space: nowrap; }
     .btn-sm { padding: 6px 12px; font-size: 13px; }
     .btn-md { padding: 9px 18px; font-size: 14px; }
-    .btn-lg { padding: 12px 24px; font-size: 15px; }
-
     .btn-primary { background: var(--primary); color: white; }
     .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); }
-
     .btn-ghost { background: transparent; color: var(--text-muted); }
     .btn-ghost:hover { background: var(--surface2); color: var(--text); }
-
     .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
     .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
-
     .btn-danger { background: var(--danger-light); color: var(--danger); }
     .btn-danger:hover { background: var(--danger); color: white; }
-
     .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
 
-    /* ---- MAIN ---- */
-    main {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 32px 24px 80px;
-    }
+    main { max-width: 900px; margin: 0 auto; padding: 24px 16px 80px; }
 
-    /* ---- TABS ---- */
-    .tabs {
-      display: flex;
-      gap: 4px;
-      background: var(--surface2);
-      border-radius: var(--radius);
-      padding: 4px;
-      margin-bottom: 28px;
-    }
-
-    .tab {
-      flex: 1;
-      padding: 10px 20px;
-      border: none;
-      border-radius: var(--radius-sm);
-      background: transparent;
-      font-family: inherit;
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--text-muted);
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    .tab.active {
-      background: var(--surface);
-      color: var(--primary);
-      box-shadow: var(--shadow);
-    }
-
-    .tab-avatar {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      font-weight: 700;
-    }
-
+    .person-tabs { display: flex; gap: 4px; background: var(--surface2); border-radius: var(--radius); padding: 4px; margin-bottom: 20px; }
+    .person-tab { flex: 1; padding: 10px 8px; border: none; border-radius: var(--radius-sm); background: transparent; font-family: inherit; font-size: 14px; font-weight: 500; color: var(--text-muted); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 6px; position: relative; }
+    .person-tab.active { background: var(--surface); color: var(--primary); box-shadow: var(--shadow); }
+    .tab-avatar { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
     .tab-avatar.tania { background: #dbeafe; color: #2563eb; }
     .tab-avatar.nair { background: #fce7f3; color: #db2777; }
+    .alert-dot { position: absolute; top: 5px; right: 5px; width: 8px; height: 8px; background: var(--danger); border-radius: 50%; display: none; }
+    .alert-dot.show { display: block; }
 
-    /* ---- SECTION HEADER ---- */
-    .section-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 20px;
-    }
+    .view-tabs { display: flex; gap: 2px; margin-bottom: 20px; border-bottom: 2px solid var(--border); }
+    .view-tab { padding: 8px 14px; border: none; background: transparent; font-family: inherit; font-size: 14px; font-weight: 500; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.15s; }
+    .view-tab.active { color: var(--primary); border-bottom-color: var(--primary); }
 
-    .section-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: 26px;
-      color: var(--text);
-      letter-spacing: -0.5px;
-    }
+    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .section-title { font-family: 'DM Serif Display', serif; font-size: 24px; letter-spacing: -0.5px; }
 
-    /* ---- CARDS ---- */
-    .cards-grid {
-      display: grid;
-      gap: 14px;
-    }
-
-    .med-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px 22px;
-      box-shadow: var(--shadow);
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 12px;
-      transition: box-shadow 0.2s;
-      animation: fadeIn 0.3s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
+    .cards-grid { display: grid; gap: 12px; }
+    .med-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; box-shadow: var(--shadow); display: grid; grid-template-columns: 1fr auto; gap: 12px; transition: box-shadow 0.2s; animation: fadeIn 0.3s ease; }
+    .med-card.urgent-card { border-left: 3px solid var(--danger); }
+    .med-card.soon-card { border-left: 3px solid var(--warning); }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
     .med-card:hover { box-shadow: var(--shadow-lg); }
-
-    .med-name {
-      font-size: 17px;
-      font-weight: 600;
-      margin-bottom: 6px;
-      color: var(--text);
-    }
-
-    .med-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-
-    .tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 3px 10px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 500;
-      background: var(--surface2);
-      color: var(--text-muted);
-      border: 1px solid var(--border);
-    }
-
+    .med-name { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+    .med-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+    .tag { display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px; border-radius: 20px; font-size: 12px; font-weight: 500; background: var(--surface2); color: var(--text-muted); border: 1px solid var(--border); }
     .tag-blue { background: var(--primary-light); color: var(--primary); border-color: #bfdbfe; }
     .tag-manha { background: #fef9c3; color: #854d0e; border-color: #fde68a; }
     .tag-tarde { background: #ffedd5; color: #9a3412; border-color: #fed7aa; }
     .tag-noite { background: #ede9fe; color: #5b21b6; border-color: #ddd6fe; }
     .tag-variado { background: #f0fdf4; color: #166534; border-color: #bbf7d0; }
-
-    .next-buy {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      font-weight: 500;
-      padding: 6px 12px;
-      border-radius: var(--radius-sm);
-    }
-
+    .next-buy { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; padding: 5px 10px; border-radius: var(--radius-sm); width: fit-content; }
     .next-buy.urgent { background: var(--danger-light); color: var(--danger); }
     .next-buy.soon { background: var(--warning-light); color: #92400e; }
     .next-buy.ok { background: var(--success-light); color: #065f46; }
-
-    .med-obs {
-      font-size: 13px;
-      color: var(--text-muted);
-      font-style: italic;
-      margin-top: 4px;
-    }
-
-    .med-actions {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      align-items: flex-end;
-      justify-content: flex-start;
-    }
-
+    .med-obs { font-size: 13px; color: var(--text-muted); font-style: italic; margin-top: 6px; }
+    .med-actions { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
     .med-actions.hidden { display: none; }
 
-    /* ---- EMPTY STATE ---- */
-    .empty-state {
-      text-align: center;
-      padding: 60px 24px;
-      color: var(--text-muted);
-    }
+    .turno-block { margin-bottom: 24px; }
+    .turno-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--border); }
+    .turno-icon { font-size: 22px; }
+    .turno-label { font-family: 'DM Serif Display', serif; font-size: 20px; }
+    .turno-count { background: var(--surface2); color: var(--text-muted); border-radius: 20px; padding: 2px 10px; font-size: 12px; font-weight: 600; }
+    .schedule-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; box-shadow: var(--shadow); display: flex; align-items: center; gap: 12px; margin-bottom: 8px; animation: fadeIn 0.3s ease; }
+    .schedule-pill { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .schedule-pill.manha { background: #fef9c3; }
+    .schedule-pill.tarde { background: #ffedd5; }
+    .schedule-pill.noite { background: #ede9fe; }
+    .schedule-pill.variado { background: #f0fdf4; }
+    .schedule-info { flex: 1; }
+    .schedule-name { font-weight: 600; font-size: 15px; margin-bottom: 2px; }
+    .schedule-detail { font-size: 13px; color: var(--text-muted); }
+    .schedule-alert { font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 20px; white-space: nowrap; }
+    .schedule-alert.urgent { background: var(--danger-light); color: var(--danger); }
+    .schedule-alert.soon { background: var(--warning-light); color: #92400e; }
 
-    .empty-icon { font-size: 48px; margin-bottom: 12px; }
+    .shopping-banner { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 20px; box-shadow: var(--shadow); }
+    .shopping-banner-title { font-family: 'DM Serif Display', serif; font-size: 20px; margin-bottom: 4px; }
+    .shopping-banner-sub { font-size: 13px; color: var(--text-muted); }
+    .shopping-section { margin-bottom: 24px; }
+    .shopping-section-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-muted); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+    .shopping-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px 16px; margin-bottom: 8px; display: flex; align-items: center; gap: 12px; box-shadow: var(--shadow); }
+    .shopping-item.is-urgent { border-left: 3px solid var(--danger); }
+    .shopping-item.is-soon { border-left: 3px solid var(--warning); }
+    .shopping-item.is-monthly { border-left: 3px solid var(--primary); }
+    .shopping-info { flex: 1; min-width: 0; }
+    .shopping-name { font-weight: 600; font-size: 14px; }
+    .shopping-detail { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+    .shopping-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+    .shopping-qty { font-size: 13px; font-weight: 700; color: var(--primary); background: var(--primary-light); padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+    .shopping-person { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 20px; }
+    .shopping-person.tania { background: #dbeafe; color: #1d4ed8; }
+    .shopping-person.nair { background: #fce7f3; color: #be185d; }
+    .person-group-title { font-family: 'DM Serif Display', serif; font-size: 18px; margin: 16px 0 10px; display: flex; align-items: center; gap: 8px; }
+
+    .empty-state { text-align: center; padding: 50px 20px; color: var(--text-muted); }
+    .empty-icon { font-size: 44px; margin-bottom: 12px; }
     .empty-state h3 { font-size: 18px; margin-bottom: 6px; color: var(--text); }
-    .empty-state p { font-size: 14px; }
-
-    /* ---- LOADING ---- */
-    .loading {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 60px;
-      gap: 8px;
-      color: var(--text-muted);
-    }
-
-    .spinner {
-      width: 20px;
-      height: 20px;
-      border: 2px solid var(--border);
-      border-top-color: var(--primary);
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-    }
-
+    .loading { display: flex; justify-content: center; align-items: center; padding: 60px; gap: 8px; color: var(--text-muted); }
+    .spinner { width: 20px; height: 20px; border: 2px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.7s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ---- MODAL ---- */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.5);
-      backdrop-filter: blur(4px);
-      z-index: 200;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      animation: fadeOverlay 0.2s ease;
-    }
-
-    @keyframes fadeOverlay {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(15,23,42,0.5); backdrop-filter: blur(4px); z-index: 200; align-items: center; justify-content: center; padding: 16px; }
     .modal-overlay.open { display: flex; }
-
-    .modal {
-      background: var(--surface);
-      border-radius: 16px;
-      padding: 28px;
-      width: 100%;
-      max-width: 480px;
-      box-shadow: var(--shadow-lg);
-      animation: slideUp 0.25s ease;
-    }
-
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .modal-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: 22px;
-      margin-bottom: 20px;
-      color: var(--text);
-    }
-
-    /* ---- FORM ---- */
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-bottom: 20px;
-    }
-
+    .modal { background: var(--surface); border-radius: 16px; padding: 24px; width: 100%; max-width: 480px; box-shadow: var(--shadow-lg); animation: slideUp 0.25s ease; max-height: 92vh; overflow-y: auto; }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .modal-title { font-family: 'DM Serif Display', serif; font-size: 22px; margin-bottom: 18px; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
     .form-grid .span2 { grid-column: span 2; }
+    .field label { display: block; font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
+    .field input, .field select, .field textarea { width: 100%; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 9px 12px; font-family: inherit; font-size: 14px; color: var(--text); background: var(--bg); outline: none; transition: border-color 0.15s; }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); background: white; }
+    .field textarea { resize: vertical; min-height: 60px; }
+    .field-hint { font-size: 11px; color: var(--text-light); margin-top: 3px; }
+    .modal-footer { display: flex; gap: 10px; justify-content: flex-end; }
 
-    .field label {
-      display: block;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 6px;
-    }
-
-    .field input,
-    .field select,
-    .field textarea {
-      width: 100%;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 9px 12px;
-      font-family: inherit;
-      font-size: 14px;
-      color: var(--text);
-      background: var(--bg);
-      transition: border-color 0.15s, box-shadow 0.15s;
-      outline: none;
-    }
-
-    .field input:focus,
-    .field select:focus,
-    .field textarea:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-      background: white;
-    }
-
-    .field textarea { resize: vertical; min-height: 70px; }
-
-    .field-hint {
-      font-size: 11px;
-      color: var(--text-light);
-      margin-top: 4px;
-    }
-
-    .modal-footer {
-      display: flex;
-      gap: 10px;
-      justify-content: flex-end;
-    }
-
-    /* ---- PIN MODAL ---- */
-    .pin-display {
-      display: flex;
-      gap: 8px;
-      justify-content: center;
-      margin: 20px 0;
-    }
-
-    .pin-dot {
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      border: 2px solid var(--border);
-      background: transparent;
-      transition: all 0.15s;
-    }
-
-    .pin-dot.filled {
-      background: var(--primary);
-      border-color: var(--primary);
-    }
-
-    .pin-keypad {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      max-width: 260px;
-      margin: 0 auto;
-    }
-
-    .pin-key {
-      aspect-ratio: 1;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      background: var(--surface2);
-      font-size: 20px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.1s;
-      font-family: inherit;
-    }
-
+    .pin-display { display: flex; gap: 8px; justify-content: center; margin: 16px 0; }
+    .pin-dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--border); background: transparent; transition: all 0.15s; }
+    .pin-dot.filled { background: var(--primary); border-color: var(--primary); }
+    .pin-keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 240px; margin: 0 auto; }
+    .pin-key { aspect-ratio: 1; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface2); font-size: 20px; font-weight: 500; cursor: pointer; transition: all 0.1s; font-family: inherit; }
     .pin-key:hover { background: var(--primary-light); border-color: var(--primary); color: var(--primary); }
     .pin-key:active { transform: scale(0.95); }
-    .pin-key.del { font-size: 16px; color: var(--text-muted); }
+    .pin-error { text-align: center; color: var(--danger); font-size: 13px; margin-top: 8px; min-height: 20px; }
 
-    .pin-error {
-      text-align: center;
-      color: var(--danger);
-      font-size: 13px;
-      margin-top: 8px;
-      min-height: 20px;
-    }
-
-    /* ---- TOAST ---- */
-    .toast {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      background: var(--text);
-      color: white;
-      padding: 12px 18px;
-      border-radius: var(--radius-sm);
-      font-size: 14px;
-      font-weight: 500;
-      box-shadow: var(--shadow-lg);
-      z-index: 999;
-      display: none;
-      animation: slideToast 0.3s ease;
-    }
-
-    @keyframes slideToast {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .toast.show { display: block; }
+    .toast { position: fixed; bottom: 24px; right: 16px; background: var(--text); color: white; padding: 12px 18px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 500; box-shadow: var(--shadow-lg); z-index: 999; display: none; }
+    .toast.show { display: block; animation: slideToast 0.3s ease; }
+    @keyframes slideToast { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     .toast.success { background: var(--success); }
     .toast.error { background: var(--danger); }
-
-    /* ---- CONFIG BANNER ---- */
-    .config-banner {
-      background: #fef9c3;
-      border: 1px solid #fde68a;
-      border-radius: var(--radius);
-      padding: 14px 18px;
-      margin-bottom: 24px;
-      font-size: 13px;
-      color: #854d0e;
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-    }
 
     @media (max-width: 600px) {
       .form-grid { grid-template-columns: 1fr; }
@@ -538,7 +165,6 @@
 </head>
 <body>
 
-<!-- HEADER -->
 <header>
   <div class="logo">
     <div class="logo-icon">💊</div>
@@ -548,63 +174,51 @@
     </div>
   </div>
   <div class="header-right">
-    <span class="edit-badge" id="editBadge">✓ Modo Edição</span>
-    <button class="btn btn-outline btn-sm" id="btnToggleEdit" onclick="toggleEditMode()">
-      🔒 Entrar como Editor
-    </button>
+    <span class="edit-badge" id="editBadge">✓ Edição</span>
+    <button class="btn btn-outline btn-sm" id="btnToggleEdit" onclick="toggleEditMode()">🔒 Editor</button>
   </div>
 </header>
 
-<!-- CONFIG BANNER -->
-<div id="configBanner" style="max-width:900px;margin:24px auto 0;padding:0 24px;display:none;">
-  <div class="config-banner">
-    ⚠️ <div>
-      <strong>Configure o backend primeiro:</strong> Abra o arquivo <code>Code.gs</code>, faça o deploy como Google Apps Script Web App e cole a URL gerada em <code>API_URL</code> no JavaScript abaixo. 
-      <a href="https://script.google.com" target="_blank" style="color:#1d4ed8;font-weight:600;">Abrir Google Apps Script →</a>
-    </div>
-  </div>
-</div>
-
-<!-- MAIN -->
 <main>
-  <!-- TABS -->
-  <div class="tabs">
-    <button class="tab active" onclick="switchUser('Tânia')" id="tab-Tânia">
+  <div class="person-tabs">
+    <button class="person-tab active" onclick="switchUser('Tânia')" id="ptab-Tânia">
       <span class="tab-avatar tania">T</span> Tânia
+      <span class="alert-dot" id="alert-Tânia"></span>
     </button>
-    <button class="tab" onclick="switchUser('Nair')" id="tab-Nair">
+    <button class="person-tab" onclick="switchUser('Nair')" id="ptab-Nair">
       <span class="tab-avatar nair">N</span> Nair
+      <span class="alert-dot" id="alert-Nair"></span>
+    </button>
+    <button class="person-tab" onclick="switchUser('_compras')" id="ptab-_compras">
+      🛒 Compras
+      <span class="alert-dot" id="alert-_compras"></span>
     </button>
   </div>
 
-  <!-- SECTION HEADER -->
-  <div class="section-header">
-    <div>
-      <div class="section-title" id="sectionTitle">Medicamentos de Tânia</div>
-    </div>
-    <button class="btn btn-primary btn-md" id="btnAdd" onclick="openAddModal()" style="display:none;">
-      + Adicionar
-    </button>
+  <div class="view-tabs" id="viewTabs">
+    <button class="view-tab active" onclick="switchView('medicamentos')" id="vtab-medicamentos">💊 Medicamentos</button>
+    <button class="view-tab" onclick="switchView('horarios')" id="vtab-horarios">🕐 Horários do Dia</button>
   </div>
 
-  <!-- CONTENT -->
+  <div class="section-header" id="sectionHeader">
+    <div class="section-title" id="sectionTitle">Medicamentos de Tânia</div>
+    <button class="btn btn-primary btn-md" id="btnAdd" onclick="openAddModal()" style="display:none;">+ Adicionar</button>
+  </div>
+
   <div id="content">
     <div class="loading"><div class="spinner"></div> Carregando...</div>
   </div>
 </main>
 
-<!-- ===== MODAL: PIN ===== -->
+<!-- PIN -->
 <div class="modal-overlay" id="pinModal">
-  <div class="modal" style="max-width:320px;text-align:center;">
+  <div class="modal" style="max-width:300px;text-align:center;">
     <div class="modal-title" style="text-align:center;">🔐 Modo Edição</div>
-    <p style="color:var(--text-muted);font-size:14px;margin-bottom:8px;">Digite o PIN de acesso</p>
-    <div class="pin-display" id="pinDisplay">
-      <div class="pin-dot" id="d0"></div>
-      <div class="pin-dot" id="d1"></div>
-      <div class="pin-dot" id="d2"></div>
-      <div class="pin-dot" id="d3"></div>
-      <div class="pin-dot" id="d4"></div>
-      <div class="pin-dot" id="d5"></div>
+    <p style="color:var(--text-muted);font-size:14px;">Digite o PIN de acesso</p>
+    <div class="pin-display">
+      <div class="pin-dot" id="d0"></div><div class="pin-dot" id="d1"></div>
+      <div class="pin-dot" id="d2"></div><div class="pin-dot" id="d3"></div>
+      <div class="pin-dot" id="d4"></div><div class="pin-dot" id="d5"></div>
     </div>
     <div class="pin-keypad">
       <button class="pin-key" onclick="pinKey('1')">1</button>
@@ -616,15 +230,15 @@
       <button class="pin-key" onclick="pinKey('7')">7</button>
       <button class="pin-key" onclick="pinKey('8')">8</button>
       <button class="pin-key" onclick="pinKey('9')">9</button>
-      <button class="pin-key del" onclick="pinKey('del')">⌫</button>
-      <button class="pin-key" onclick="pinKey('0')">0</button>
       <button class="pin-key" style="font-size:13px;color:var(--text-muted);" onclick="closePinModal()">✕</button>
+      <button class="pin-key" onclick="pinKey('0')">0</button>
+      <button class="pin-key" style="font-size:16px;" onclick="pinKey('del')">⌫</button>
     </div>
     <div class="pin-error" id="pinError"></div>
   </div>
 </div>
 
-<!-- ===== MODAL: ADD / EDIT ===== -->
+<!-- ADD/EDIT -->
 <div class="modal-overlay" id="medModal">
   <div class="modal">
     <div class="modal-title" id="medModalTitle">Adicionar Medicamento</div>
@@ -636,7 +250,7 @@
       </div>
       <div class="field">
         <label>Dosagem *</label>
-        <input type="text" id="f-dosagem" placeholder="Ex: 50mg, 1 comp" />
+        <input type="text" id="f-dosagem" placeholder="Ex: 50mg" />
       </div>
       <div class="field">
         <label>Turno *</label>
@@ -647,27 +261,27 @@
           <option value="Noite">🌙 Noite</option>
           <option value="Manhã e Noite">☀️🌙 Manhã e Noite</option>
           <option value="3x ao dia">3x ao dia</option>
-          <option value="Variado">Variado / Irregular</option>
+          <option value="Variado">Variado</option>
         </select>
       </div>
       <div class="field">
         <label>Comprimidos/Dia *</label>
         <input type="number" id="f-dose-dia" placeholder="Ex: 1" min="0.25" step="0.25" />
-        <div class="field-hint">Use decimais para doses parciais (ex: 0.5)</div>
+        <div class="field-hint">0.5 = meio comprimido</div>
       </div>
       <div class="field">
-        <label>Dias de Uso/Semana</label>
-        <input type="number" id="f-dias-semana" placeholder="7 = diário" min="1" max="7" value="7" />
+        <label>Dias Uso/Semana</label>
+        <input type="number" id="f-dias-semana" value="7" min="1" max="7" />
         <div class="field-hint">7 = todos os dias</div>
       </div>
       <div class="field">
-        <label>Comprimidos em Estoque *</label>
+        <label>Estoque (comprimidos) *</label>
         <input type="number" id="f-quantidade" placeholder="Ex: 30" min="0" />
       </div>
-      <div class="field span2" style="grid-column:span 2">
+      <div class="field span2">
         <label>Previsão Próxima Compra</label>
-        <div id="previsaoCalc" style="padding:8px 12px;background:var(--surface2);border-radius:var(--radius-sm);font-size:14px;color:var(--text-muted);min-height:38px;">
-          Preencha estoque e dosagem para calcular...
+        <div id="previsaoCalc" style="padding:8px 12px;background:var(--surface2);border-radius:var(--radius-sm);font-size:14px;color:var(--text-muted);min-height:36px;">
+          Preencha estoque e dosagem...
         </div>
       </div>
       <div class="field span2">
@@ -682,12 +296,12 @@
   </div>
 </div>
 
-<!-- ===== MODAL: CONFIRM DELETE ===== -->
+<!-- DELETE -->
 <div class="modal-overlay" id="deleteModal">
-  <div class="modal" style="max-width:380px;text-align:center;">
-    <div style="font-size:40px;margin-bottom:12px;">🗑️</div>
+  <div class="modal" style="max-width:360px;text-align:center;">
+    <div style="font-size:36px;margin-bottom:10px;">🗑️</div>
     <div class="modal-title">Remover medicamento?</div>
-    <p style="color:var(--text-muted);font-size:14px;margin-bottom:24px;" id="deleteConfirmText">Esta ação não pode ser desfeita.</p>
+    <p style="color:var(--text-muted);font-size:14px;margin-bottom:20px;" id="deleteConfirmText"></p>
     <div style="display:flex;gap:10px;justify-content:center;">
       <button class="btn btn-outline btn-md" onclick="closeDeleteModal()">Cancelar</button>
       <button class="btn btn-danger btn-md" onclick="confirmDelete()">Remover</button>
@@ -695,370 +309,342 @@
   </div>
 </div>
 
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script>
-  // ============================================================
-  // CONFIGURAÇÃO — Cole aqui a URL do seu Apps Script Web App
-  // ============================================================
   const API_URL = "https://script.google.com/macros/s/AKfycbwEho0mB61-Cb0WA5SsQdWr74jH94V7WhG9pdehQ4OV5XJA-l78o2FIfWy7cNVzGj3A/exec";
   const CORRECT_PIN = "260466";
+  const USERS = ["Tânia", "Nair"];
 
-  // ============================================================
-  // ESTADO
-  // ============================================================
   let currentUser = "Tânia";
+  let currentView = "medicamentos";
   let isEditMode = false;
-  let medications = [];
+  let medications = { "Tânia": [], "Nair": [] };
   let deleteTarget = null;
-
-  // PIN
   let pinValue = "";
 
-  // ============================================================
-  // INIT
-  // ============================================================
-  window.onload = () => {
-    if (API_URL === "SUA_APPS_SCRIPT_WEB_APP_URL_AQUI") {
-      document.getElementById("configBanner").style.display = "block";
+  // ===================== DATE HELPERS =====================
+  function normalizeDate(val) {
+    if (!val) return "";
+    const s = String(val).trim();
+    if (/^\d{2}\/\d{2}\/\d{4}$/.test(s)) return s;
+    if (/^\d{4}-\d{2}-\d{2}/.test(s)) {
+      const p = s.substring(0, 10).split("-");
+      return `${p[2]}/${p[1]}/${p[0]}`;
     }
-    loadMedications();
-    setupFormListeners();
-  };
+    const d = new Date(s);
+    if (!isNaN(d)) return d.toLocaleDateString("pt-BR");
+    return s;
+  }
 
-  // ============================================================
-  // USER SWITCH
-  // ============================================================
+  function getDaysUntil(dateStr) {
+    const s = normalizeDate(dateStr);
+    if (!s) return null;
+    const p = s.split("/");
+    if (p.length < 3) return null;
+    const d = new Date(Number(p[2]), Number(p[1]) - 1, Number(p[0]));
+    if (isNaN(d)) return null;
+    const today = new Date(); today.setHours(0,0,0,0);
+    return Math.ceil((d - today) / 86400000);
+  }
+
+  function getUrgency(dateStr) {
+    const diff = getDaysUntil(dateStr);
+    if (diff === null) return { cls: "", emoji: "", diff: null };
+    if (diff <= 7)  return { cls: "urgent", emoji: "🔴", diff };
+    if (diff <= 14) return { cls: "soon",   emoji: "🟡", diff };
+    return            { cls: "ok",     emoji: "🟢", diff };
+  }
+
+  function calcQtyNeeded(med, days) {
+    const dose = Number(med["Comprimidos/Dia"]) || 0;
+    const diasSem = Number(med["Dias Uso/Semana"]) || 7;
+    const needed = Math.ceil(dose * (diasSem / 7) * days);
+    return Math.max(0, needed - (Number(med["Quantidade Estoque"]) || 0));
+  }
+
+  // ===================== INIT =====================
+  window.onload = () => { setupFormListeners(); loadAll(); };
+
+  async function loadAll() {
+    document.getElementById("content").innerHTML = `<div class="loading"><div class="spinner"></div> Carregando...</div>`;
+    await Promise.all(USERS.map(u => loadMedications(u)));
+    checkAlerts(); render();
+  }
+
+  async function loadMedications(user) {
+    try {
+      const res = await fetch(`${API_URL}?action=getMedications&user=${encodeURIComponent(user)}`);
+      const data = await res.json();
+      if (data.success) medications[user] = (data.data || []).map(m => ({
+        ...m, "Próxima Compra": normalizeDate(m["Próxima Compra"])
+      }));
+    } catch(e) { medications[user] = []; }
+  }
+
+  // ===================== ALERTS =====================
+  function checkAlerts() {
+    USERS.forEach(user => {
+      const has = (medications[user]||[]).some(m => { const d=getDaysUntil(m["Próxima Compra"]); return d!==null&&d<=7; });
+      document.getElementById(`alert-${user}`).classList.toggle("show", has);
+    });
+    const any = USERS.some(user => (medications[user]||[]).some(m => { const d=getDaysUntil(m["Próxima Compra"]); return d!==null&&d<=30; }));
+    document.getElementById("alert-_compras").classList.toggle("show", any);
+  }
+
+  // ===================== NAVIGATION =====================
   function switchUser(user) {
     currentUser = user;
-    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-    document.getElementById(`tab-${user}`).classList.add("active");
-    document.getElementById("sectionTitle").textContent = `Medicamentos de ${user}`;
-    loadMedications();
-  }
-
-  // ============================================================
-  // LOAD MEDICATIONS
-  // ============================================================
-  async function loadMedications() {
-    const content = document.getElementById("content");
-    content.innerHTML = `<div class="loading"><div class="spinner"></div> Carregando...</div>`;
-
-    try {
-      const res = await fetch(`${API_URL}?action=getMedications&user=${encodeURIComponent(currentUser)}`);
-      const data = await res.json();
-
-      if (!data.success) throw new Error(data.error || "Erro ao carregar");
-
-      medications = data.data;
-      renderMedications();
-    } catch (err) {
-      content.innerHTML = `
-        <div class="empty-state">
-          <div class="empty-icon">⚠️</div>
-          <h3>Erro ao carregar</h3>
-          <p>${err.message}</p>
-          <p style="margin-top:8px;font-size:12px;">Verifique se a URL do Apps Script está configurada corretamente.</p>
-        </div>`;
+    document.querySelectorAll(".person-tab").forEach(t => t.classList.remove("active"));
+    document.getElementById(`ptab-${user}`).classList.add("active");
+    const isCompras = user === "_compras";
+    document.getElementById("viewTabs").style.display = isCompras ? "none" : "flex";
+    document.getElementById("sectionHeader").style.display = isCompras ? "none" : "flex";
+    if (!isCompras) {
+      currentView = "medicamentos";
+      document.querySelectorAll(".view-tab").forEach(t => t.classList.remove("active"));
+      document.getElementById("vtab-medicamentos").classList.add("active");
     }
+    render();
   }
 
-  // ============================================================
-  // RENDER
-  // ============================================================
-  function renderMedications() {
-    const content = document.getElementById("content");
+  function switchView(view) {
+    currentView = view;
+    document.querySelectorAll(".view-tab").forEach(t => t.classList.remove("active"));
+    document.getElementById(`vtab-${view}`).classList.add("active");
+    render();
+  }
 
-    if (!medications.length) {
-      content.innerHTML = `
-        <div class="empty-state">
-          <div class="empty-icon">💊</div>
-          <h3>Nenhum medicamento cadastrado</h3>
-          <p>${isEditMode ? 'Clique em "+ Adicionar" para começar.' : 'Nenhum registro encontrado para ' + currentUser + '.'}</p>
-        </div>`;
+  // ===================== RENDER =====================
+  function render() {
+    if (currentUser === "_compras") { renderCompras(); return; }
+    const meds = medications[currentUser] || [];
+    document.getElementById("sectionTitle").textContent = `Medicamentos de ${currentUser}`;
+    document.getElementById("btnAdd").style.display = isEditMode ? "inline-flex" : "none";
+    if (currentView === "horarios") renderHorarios(meds);
+    else renderMedicamentos(meds);
+  }
+
+  function renderMedicamentos(meds) {
+    const content = document.getElementById("content");
+    if (!meds.length) {
+      content.innerHTML = `<div class="empty-state"><div class="empty-icon">💊</div><h3>Nenhum medicamento</h3><p>${isEditMode?'Clique em "+ Adicionar".':'Nenhum registro encontrado.'}</p></div>`;
       return;
     }
-
-    content.innerHTML = `<div class="cards-grid">${medications.map(renderCard).join("")}</div>`;
+    content.innerHTML = `<div class="cards-grid">${meds.map(m => renderMedCard(m, currentUser)).join("")}</div>`;
   }
 
-  function renderCard(med) {
-    const turnTag = getTurnTag(med["Turno"]);
-    const nextBuy = med["Próxima Compra"];
-    const urgency = getUrgency(nextBuy);
+  function renderMedCard(med, user) {
+    const urgency = getUrgency(med["Próxima Compra"]);
+    const urgentClass = urgency.cls==="urgent"?"urgent-card":urgency.cls==="soon"?"soon-card":"";
     const actionsClass = isEditMode ? "" : "hidden";
-
+    const dateDisplay = normalizeDate(med["Próxima Compra"]);
+    const diffLabel = urgency.diff !== null ? ` (${urgency.diff > 0 ? urgency.diff+"d" : "hoje!"})` : "";
+    const turnMap = {"Manhã":"tag-manha","Tarde":"tag-tarde","Noite":"tag-noite","Manhã e Noite":"tag-manha","Variado":"tag-variado","3x ao dia":"tag-blue"};
+    const turnCls = turnMap[med["Turno"]] || "";
     return `
-    <div class="med-card">
+    <div class="med-card ${urgentClass}">
       <div>
         <div class="med-name">💊 ${med["Medicamento"]}</div>
         <div class="med-meta">
           <span class="tag tag-blue">📏 ${med["Dosagem"]}</span>
-          ${turnTag}
+          <span class="tag ${turnCls}">🕐 ${med["Turno"]||"—"}</span>
           <span class="tag">🔢 ${med["Comprimidos/Dia"]} comp/dia</span>
-          ${med["Dias Uso/Semana"] != 7 ? `<span class="tag">📅 ${med["Dias Uso/Semana"]}x/semana</span>` : ""}
+          ${Number(med["Dias Uso/Semana"])!==7?`<span class="tag">📅 ${med["Dias Uso/Semana"]}x/sem</span>`:""}
           <span class="tag">📦 ${med["Quantidade Estoque"]} em estoque</span>
         </div>
-        ${nextBuy ? `<div class="next-buy ${urgency.cls}">🛒 Próxima compra: <strong>${nextBuy}</strong> ${urgency.emoji}</div>` : ""}
-        ${med["Observações"] ? `<div class="med-obs">📝 ${med["Observações"]}</div>` : ""}
+        ${dateDisplay?`<div class="next-buy ${urgency.cls}">🛒 Próxima compra: <strong>${dateDisplay}</strong> ${urgency.emoji}${diffLabel}</div>`:""}
+        ${med["Observações"]?`<div class="med-obs">📝 ${med["Observações"]}</div>`:""}
       </div>
       <div class="med-actions ${actionsClass}">
-        <button class="btn btn-outline btn-sm" onclick="openEditModal(${med._row})">✏️ Editar</button>
-        <button class="btn btn-danger btn-sm" onclick="openDeleteModal(${med._row}, '${med["Medicamento"].replace(/'/g, "\\'")}')">🗑</button>
+        <button class="btn btn-outline btn-sm" onclick="openEditModal(${med._row},'${user}')">✏️</button>
+        <button class="btn btn-danger btn-sm" onclick="openDeleteModal(${med._row},'${med["Medicamento"].replace(/'/g,"\\'")}')">🗑</button>
       </div>
     </div>`;
   }
 
-  function getTurnTag(turno) {
-    const map = {
-      "Manhã": "tag-manha",
-      "Tarde": "tag-tarde",
-      "Noite": "tag-noite",
-      "Manhã e Noite": "tag-manha",
-      "3x ao dia": "tag-blue",
-      "Variado": "tag-variado"
-    };
-    const cls = map[turno] || "";
-    return `<span class="tag ${cls}">🕐 ${turno || "—"}</span>`;
+  function renderHorarios(meds) {
+    const content = document.getElementById("content");
+    if (!meds.length) { content.innerHTML=`<div class="empty-state"><div class="empty-icon">🕐</div><h3>Nenhum medicamento</h3></div>`; return; }
+    const turnos = [
+      {icon:"☀️",label:"Manhã",  cls:"manha",  match:t=>["Manhã","Manhã e Noite","3x ao dia"].includes(t)},
+      {icon:"🌤",label:"Tarde",  cls:"tarde",  match:t=>["Tarde","3x ao dia"].includes(t)},
+      {icon:"🌙",label:"Noite",  cls:"noite",  match:t=>["Noite","Manhã e Noite","3x ao dia"].includes(t)},
+      {icon:"🔄",label:"Variado / Irregular",cls:"variado",match:t=>t==="Variado"},
+    ];
+    let html = "";
+    turnos.forEach(turno => {
+      const items = meds.filter(m => turno.match(m["Turno"]));
+      if (!items.length) return;
+      html += `<div class="turno-block">
+        <div class="turno-header"><span class="turno-icon">${turno.icon}</span><span class="turno-label">${turno.label}</span><span class="turno-count">${items.length} remédio${items.length>1?"s":""}</span></div>`;
+      items.forEach(med => {
+        const u = getUrgency(med["Próxima Compra"]);
+        const alertHtml = u.cls==="urgent"?`<span class="schedule-alert urgent">🔴 ${u.diff}d</span>`:u.cls==="soon"?`<span class="schedule-alert soon">🟡 ${u.diff}d</span>`:"";
+        html += `<div class="schedule-card">
+          <div class="schedule-pill ${turno.cls}">${turno.icon}</div>
+          <div class="schedule-info">
+            <div class="schedule-name">${med["Medicamento"]}</div>
+            <div class="schedule-detail">${med["Dosagem"]} · ${med["Comprimidos/Dia"]} comp${Number(med["Dias Uso/Semana"])!==7?` · ${med["Dias Uso/Semana"]}x/sem`:""}</div>
+          </div>
+          ${alertHtml}
+        </div>`;
+      });
+      html += `</div>`;
+    });
+    content.innerHTML = html;
   }
 
-  function getUrgency(dateStr) {
-    if (!dateStr) return { cls: "", emoji: "" };
-    const parts = dateStr.split("/");
-    const date = new Date(parts[2], parts[1] - 1, parts[0]);
-    const today = new Date();
-    const diff = Math.ceil((date - today) / (1000 * 60 * 60 * 24));
-
-    if (diff <= 7) return { cls: "urgent", emoji: "🔴" };
-    if (diff <= 14) return { cls: "soon", emoji: "🟡" };
-    return { cls: "ok", emoji: "🟢" };
-  }
-
-  // ============================================================
-  // EDIT MODE
-  // ============================================================
-  function toggleEditMode() {
-    if (isEditMode) {
-      isEditMode = false;
-      updateEditUI();
-    } else {
-      openPinModal();
+  function renderCompras() {
+    const content = document.getElementById("content");
+    const urgent=[], soon=[];
+    USERS.forEach(user => {
+      (medications[user]||[]).forEach(med => {
+        const diff = getDaysUntil(med["Próxima Compra"]);
+        if (diff===null) return;
+        const entry = {...med, _user:user, _diff:diff, _qty30:calcQtyNeeded(med,30)};
+        if (diff<=7) urgent.push(entry);
+        else if (diff<=30) soon.push(entry);
+      });
+    });
+    const allNeeded = [...urgent,...soon];
+    let html = `<div class="shopping-banner">
+      <div class="shopping-banner-title">🛒 Lista de Compras</div>
+      <div class="shopping-banner-sub">Medicamentos que vão faltar nos próximos 30 dias · ${new Date().toLocaleDateString("pt-BR",{month:"long",year:"numeric"})}</div>
+    </div>`;
+    if (!allNeeded.length) {
+      html+=`<div class="empty-state"><div class="empty-icon">✅</div><h3>Tudo em dia!</h3><p>Nenhum medicamento precisa ser comprado nos próximos 30 dias.</p></div>`;
+      content.innerHTML=html; return;
     }
+    if (urgent.length) {
+      html+=`<div class="shopping-section"><div class="shopping-section-title">🔴 Urgente — menos de 7 dias</div>${urgent.map(m=>shoppingItemHTML(m,"is-urgent")).join("")}</div>`;
+    }
+    html+=`<div class="shopping-section"><div class="shopping-section-title">📅 Compra do Mês — próximos 30 dias</div>`;
+    USERS.forEach(user => {
+      const items = [...urgent,...soon].filter(m=>m._user===user);
+      if (!items.length) return;
+      const avatarCls = user==="Tânia"?"tania":"nair";
+      html+=`<div class="person-group-title"><span class="tab-avatar ${avatarCls}" style="width:28px;height:28px;font-size:12px;">${user[0]}</span> ${user}</div>`;
+      html+=items.map(m=>shoppingItemHTML(m,"is-monthly")).join("");
+    });
+    html+=`</div>`;
+    content.innerHTML = html;
   }
 
+  function shoppingItemHTML(m, cls) {
+    const u = getUrgency(m["Próxima Compra"]);
+    const dateDisplay = normalizeDate(m["Próxima Compra"]);
+    const userCls = m._user==="Tânia"?"tania":"nair";
+    const diffTxt = m._diff<=0?"hoje!":m._diff===1?"amanhã":`em ${m._diff}d`;
+    return `<div class="shopping-item ${cls}">
+      <div style="font-size:22px;">💊</div>
+      <div class="shopping-info">
+        <div class="shopping-name">${m["Medicamento"]}</div>
+        <div class="shopping-detail">${m["Dosagem"]} · Comprar ${diffTxt} · Estoque atual: ${m["Quantidade Estoque"]}</div>
+      </div>
+      <div class="shopping-right">
+        ${m._qty30>0?`<span class="shopping-qty">+${m._qty30} comp.</span>`:""}
+        <span class="shopping-person ${userCls}">${m._user}</span>
+        <span style="font-size:11px;color:var(--text-muted);">${u.emoji} ${dateDisplay}</span>
+      </div>
+    </div>`;
+  }
+
+  // ===================== EDIT MODE =====================
+  function toggleEditMode() {
+    if (isEditMode) { isEditMode=false; updateEditUI(); } else openPinModal();
+  }
   function updateEditUI() {
     document.getElementById("editBadge").classList.toggle("visible", isEditMode);
-    document.getElementById("btnToggleEdit").textContent = isEditMode ? "🔓 Sair da Edição" : "🔒 Entrar como Editor";
-    document.getElementById("btnAdd").style.display = isEditMode ? "inline-flex" : "none";
-    renderMedications();
+    document.getElementById("btnToggleEdit").textContent = isEditMode?"🔓 Sair":"🔒 Editor";
+    render();
   }
 
-  // ============================================================
-  // PIN MODAL
-  // ============================================================
-  function openPinModal() {
-    pinValue = "";
-    updatePinDots();
-    document.getElementById("pinError").textContent = "";
-    document.getElementById("pinModal").classList.add("open");
-  }
+  // ===================== PIN =====================
+  function openPinModal() { pinValue=""; updatePinDots(); document.getElementById("pinError").textContent=""; document.getElementById("pinModal").classList.add("open"); }
+  function closePinModal() { document.getElementById("pinModal").classList.remove("open"); pinValue=""; updatePinDots(); }
+  function pinKey(k) { if(k==="del")pinValue=pinValue.slice(0,-1); else if(pinValue.length<6)pinValue+=k; updatePinDots(); if(pinValue.length===6)setTimeout(checkPin,100); }
+  function updatePinDots() { for(let i=0;i<6;i++)document.getElementById(`d${i}`).classList.toggle("filled",i<pinValue.length); }
+  function checkPin() { if(pinValue===CORRECT_PIN){isEditMode=true;closePinModal();updateEditUI();showToast("Modo edição ativado!","success");}else{document.getElementById("pinError").textContent="PIN incorreto.";pinValue="";updatePinDots();} }
 
-  function closePinModal() {
-    document.getElementById("pinModal").classList.remove("open");
-    pinValue = "";
-    updatePinDots();
-  }
-
-  function pinKey(k) {
-    if (k === "del") {
-      pinValue = pinValue.slice(0, -1);
-    } else if (pinValue.length < 6) {
-      pinValue += k;
-    }
-    updatePinDots();
-
-    if (pinValue.length === 6) {
-      setTimeout(checkPin, 100);
-    }
-  }
-
-  function updatePinDots() {
-    for (let i = 0; i < 6; i++) {
-      document.getElementById(`d${i}`).classList.toggle("filled", i < pinValue.length);
-    }
-  }
-
-  function checkPin() {
-    if (pinValue === CORRECT_PIN) {
-      isEditMode = true;
-      closePinModal();
-      updateEditUI();
-      showToast("Modo edição ativado!", "success");
-    } else {
-      document.getElementById("pinError").textContent = "PIN incorreto. Tente novamente.";
-      pinValue = "";
-      updatePinDots();
-    }
-  }
-
-  // ============================================================
-  // ADD / EDIT MODAL
-  // ============================================================
-  function openAddModal() {
-    document.getElementById("medModalTitle").textContent = "Adicionar Medicamento";
-    document.getElementById("editRow").value = "";
-    clearForm();
-    document.getElementById("medModal").classList.add("open");
-  }
-
-  function openEditModal(row) {
-    const med = medications.find(m => m._row === row);
-    if (!med) return;
-
-    document.getElementById("medModalTitle").textContent = "Editar Medicamento";
-    document.getElementById("editRow").value = row;
-
-    document.getElementById("f-nome").value = med["Medicamento"];
-    document.getElementById("f-dosagem").value = med["Dosagem"];
-    document.getElementById("f-turno").value = med["Turno"];
-    document.getElementById("f-dose-dia").value = med["Comprimidos/Dia"];
-    document.getElementById("f-dias-semana").value = med["Dias Uso/Semana"];
-    document.getElementById("f-quantidade").value = med["Quantidade Estoque"];
-    document.getElementById("f-obs").value = med["Observações"];
-
+  // ===================== ADD/EDIT =====================
+  function openAddModal() { document.getElementById("medModalTitle").textContent="Adicionar Medicamento"; document.getElementById("editRow").value=""; clearForm(); document.getElementById("medModal").classList.add("open"); }
+  function openEditModal(row, user) {
+    const med=(medications[user]||[]).find(m=>m._row===row); if(!med)return;
+    document.getElementById("medModalTitle").textContent="Editar Medicamento";
+    document.getElementById("editRow").value=row;
+    document.getElementById("f-nome").value=med["Medicamento"];
+    document.getElementById("f-dosagem").value=med["Dosagem"];
+    document.getElementById("f-turno").value=med["Turno"];
+    document.getElementById("f-dose-dia").value=med["Comprimidos/Dia"];
+    document.getElementById("f-dias-semana").value=med["Dias Uso/Semana"];
+    document.getElementById("f-quantidade").value=med["Quantidade Estoque"];
+    document.getElementById("f-obs").value=med["Observações"]||"";
     updatePrevisao();
     document.getElementById("medModal").classList.add("open");
   }
-
-  function closeMedModal() {
-    document.getElementById("medModal").classList.remove("open");
-    clearForm();
-  }
-
+  function closeMedModal() { document.getElementById("medModal").classList.remove("open"); clearForm(); }
   function clearForm() {
-    ["f-nome", "f-dosagem", "f-turno", "f-dose-dia", "f-obs"].forEach(id => {
-      const el = document.getElementById(id);
-      el.value = el.tagName === "SELECT" ? "" : "";
-    });
-    document.getElementById("f-dias-semana").value = 7;
-    document.getElementById("f-quantidade").value = "";
-    document.getElementById("previsaoCalc").textContent = "Preencha estoque e dosagem para calcular...";
+    ["f-nome","f-dosagem","f-obs"].forEach(id=>document.getElementById(id).value="");
+    document.getElementById("f-turno").value="";
+    document.getElementById("f-dose-dia").value="";
+    document.getElementById("f-dias-semana").value=7;
+    document.getElementById("f-quantidade").value="";
+    document.getElementById("previsaoCalc").textContent="Preencha estoque e dosagem...";
   }
-
-  function setupFormListeners() {
-    ["f-dose-dia", "f-dias-semana", "f-quantidade"].forEach(id => {
-      document.getElementById(id).addEventListener("input", updatePrevisao);
-    });
-  }
-
+  function setupFormListeners() { ["f-dose-dia","f-dias-semana","f-quantidade"].forEach(id=>document.getElementById(id).addEventListener("input",updatePrevisao)); }
   function updatePrevisao() {
-    const qtd = parseFloat(document.getElementById("f-quantidade").value);
-    const dose = parseFloat(document.getElementById("f-dose-dia").value);
-    const dias = parseFloat(document.getElementById("f-dias-semana").value) || 7;
-
-    if (!qtd || !dose) {
-      document.getElementById("previsaoCalc").textContent = "Preencha estoque e dosagem para calcular...";
-      return;
-    }
-
-    const compPorSemana = dose * dias;
-    const semanas = qtd / compPorSemana;
-    const diasRestantes = Math.floor(semanas * 7) - 7;
-    const compra = new Date();
-    compra.setDate(compra.getDate() + Math.max(diasRestantes, 0));
-
-    const formatted = compra.toLocaleDateString("pt-BR");
-    const diff = Math.max(diasRestantes, 0);
-    const urgency = diff <= 7 ? "🔴" : diff <= 14 ? "🟡" : "🟢";
-
-    document.getElementById("previsaoCalc").innerHTML =
-      `📅 <strong>${formatted}</strong> — em ${diff} dias ${urgency}`;
+    const qtd=parseFloat(document.getElementById("f-quantidade").value);
+    const dose=parseFloat(document.getElementById("f-dose-dia").value);
+    const dias=parseFloat(document.getElementById("f-dias-semana").value)||7;
+    if(!qtd||!dose){document.getElementById("previsaoCalc").textContent="Preencha estoque e dosagem...";return;}
+    const diasRestantes=Math.floor((qtd/(dose*dias))*7)-7;
+    const compra=new Date(); compra.setDate(compra.getDate()+Math.max(diasRestantes,0));
+    const diff=Math.max(diasRestantes,0);
+    const emoji=diff<=7?"🔴":diff<=14?"🟡":"🟢";
+    document.getElementById("previsaoCalc").innerHTML=`📅 <strong>${compra.toLocaleDateString("pt-BR")}</strong> — em ${diff} dias ${emoji}`;
   }
-
   async function saveMedication() {
-    const nome = document.getElementById("f-nome").value.trim();
-    const dosagem = document.getElementById("f-dosagem").value.trim();
-    const turno = document.getElementById("f-turno").value;
-    const doseDia = document.getElementById("f-dose-dia").value;
-    const diasSemana = document.getElementById("f-dias-semana").value || 7;
-    const quantidade = document.getElementById("f-quantidade").value;
-    const obs = document.getElementById("f-obs").value.trim();
-    const editRow = document.getElementById("editRow").value;
-
-    if (!nome || !dosagem || !turno || !doseDia || !quantidade) {
-      showToast("Preencha todos os campos obrigatórios (*)", "error");
-      return;
-    }
-
-    const btn = document.getElementById("btnSave");
-    btn.disabled = true;
-    btn.textContent = "Salvando...";
-
-    const action = editRow ? "updateMedication" : "addMedication";
-    const params = new URLSearchParams({
-      action, user: currentUser, medicamento: nome,
-      dosagem, turno, dosagem_dia: doseDia,
-      dias_uso_semana: diasSemana, quantidade, observacoes: obs
-    });
-    if (editRow) params.set("_row", editRow);
-
+    const nome=document.getElementById("f-nome").value.trim();
+    const dosagem=document.getElementById("f-dosagem").value.trim();
+    const turno=document.getElementById("f-turno").value;
+    const doseDia=document.getElementById("f-dose-dia").value;
+    const diasSem=document.getElementById("f-dias-semana").value||7;
+    const qtd=document.getElementById("f-quantidade").value;
+    const obs=document.getElementById("f-obs").value.trim();
+    const editRow=document.getElementById("editRow").value;
+    if(!nome||!dosagem||!turno||!doseDia||!qtd){showToast("Preencha todos os campos obrigatórios (*)","error");return;}
+    const btn=document.getElementById("btnSave"); btn.disabled=true; btn.textContent="Salvando...";
+    const params=new URLSearchParams({action:editRow?"updateMedication":"addMedication",user:currentUser,medicamento:nome,dosagem,turno,dosagem_dia:doseDia,dias_uso_semana:diasSem,quantidade:qtd,observacoes:obs});
+    if(editRow)params.set("_row",editRow);
     try {
-      const res = await fetch(`${API_URL}?${params.toString()}`);
-      const data = await res.json();
-      if (!data.success) throw new Error(data.error);
-
+      const res=await fetch(`${API_URL}?${params.toString()}`);
+      const data=await res.json();
+      if(!data.success)throw new Error(data.error);
       closeMedModal();
-      showToast(editRow ? "Medicamento atualizado!" : "Medicamento adicionado!", "success");
-      loadMedications();
-    } catch (err) {
-      showToast("Erro ao salvar: " + err.message, "error");
-    } finally {
-      btn.disabled = false;
-      btn.textContent = "💾 Salvar";
-    }
+      showToast(editRow?"Medicamento atualizado!":"Medicamento adicionado!","success");
+      await loadMedications(currentUser); checkAlerts(); render();
+    } catch(err){showToast("Erro ao salvar: "+err.message,"error");}
+    finally{btn.disabled=false;btn.textContent="💾 Salvar";}
   }
 
-  // ============================================================
-  // DELETE
-  // ============================================================
-  function openDeleteModal(row, nome) {
-    deleteTarget = row;
-    document.getElementById("deleteConfirmText").textContent = `Remover "${nome}"? Esta ação não pode ser desfeita.`;
-    document.getElementById("deleteModal").classList.add("open");
+  // ===================== DELETE =====================
+  function openDeleteModal(row,nome){deleteTarget=row;document.getElementById("deleteConfirmText").textContent=`Remover "${nome}"? Esta ação não pode ser desfeita.`;document.getElementById("deleteModal").classList.add("open");}
+  function closeDeleteModal(){document.getElementById("deleteModal").classList.remove("open");deleteTarget=null;}
+  async function confirmDelete(){
+    if(!deleteTarget)return;
+    try{
+      const params=new URLSearchParams({action:"deleteMedication",user:currentUser,_row:deleteTarget});
+      const res=await fetch(`${API_URL}?${params.toString()}`);
+      const data=await res.json();
+      if(!data.success)throw new Error(data.error);
+      closeDeleteModal();showToast("Medicamento removido.","success");
+      await loadMedications(currentUser);checkAlerts();render();
+    }catch(err){showToast("Erro ao remover: "+err.message,"error");}
   }
 
-  function closeDeleteModal() {
-    document.getElementById("deleteModal").classList.remove("open");
-    deleteTarget = null;
-  }
-
-  async function confirmDelete() {
-    if (!deleteTarget) return;
-
-    try {
-      const params = new URLSearchParams({ action: "deleteMedication", user: currentUser, _row: deleteTarget });
-      const res = await fetch(`${API_URL}?${params.toString()}`);
-      const data = await res.json();
-      if (!data.success) throw new Error(data.error);
-
-      closeDeleteModal();
-      showToast("Medicamento removido.", "success");
-      loadMedications();
-    } catch (err) {
-      showToast("Erro ao remover: " + err.message, "error");
-    }
-  }
-
-  // ============================================================
-  // TOAST
-  // ============================================================
-  function showToast(msg, type = "") {
-    const t = document.getElementById("toast");
-    t.textContent = msg;
-    t.className = `toast show ${type}`;
-    setTimeout(() => t.classList.remove("show"), 3000);
-  }
+  // ===================== TOAST =====================
+  function showToast(msg,type=""){const t=document.getElementById("toast");t.textContent=msg;t.className=`toast show ${type}`;setTimeout(()=>t.classList.remove("show"),3000);}
 </script>
 </body>
 </html>
