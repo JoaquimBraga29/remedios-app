@@ -995,25 +995,16 @@
     btn.disabled = true;
     btn.textContent = "Salvando...";
 
-    const payload = {
-      action: editRow ? "updateMedication" : "addMedication",
-      user: currentUser,
-      medicamento: nome,
-      dosagem,
-      turno,
-      dosagem_dia: doseDia,
-      dias_uso_semana: diasSemana,
-      quantidade,
-      observacoes: obs,
-      _row: editRow ? parseInt(editRow) : undefined
-    };
+    const action = editRow ? "updateMedication" : "addMedication";
+    const params = new URLSearchParams({
+      action, user: currentUser, medicamento: nome,
+      dosagem, turno, dosagem_dia: doseDia,
+      dias_uso_semana: diasSemana, quantidade, observacoes: obs
+    });
+    if (editRow) params.set("_row", editRow);
 
     try {
-      const res = await fetch(API_URL, {
-        method: "POST",
-        body: JSON.stringify(payload),
-        headers: { "Content-Type": "application/json" }
-      });
+      const res = await fetch(`${API_URL}?${params.toString()}`);
       const data = await res.json();
       if (!data.success) throw new Error(data.error);
 
@@ -1046,11 +1037,8 @@
     if (!deleteTarget) return;
 
     try {
-      const res = await fetch(API_URL, {
-        method: "POST",
-        body: JSON.stringify({ action: "deleteMedication", user: currentUser, _row: deleteTarget }),
-        headers: { "Content-Type": "application/json" }
-      });
+      const params = new URLSearchParams({ action: "deleteMedication", user: currentUser, _row: deleteTarget });
+      const res = await fetch(`${API_URL}?${params.toString()}`);
       const data = await res.json();
       if (!data.success) throw new Error(data.error);
 
