@@ -7,12 +7,13 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #f7f9fc; --surface: #ffffff; --surface2: #f0f4f9; --border: #e2e8f0;
+      --bg: #f7f9fc; --surface: #fff; --surface2: #f0f4f9; --border: #e2e8f0;
       --primary: #2563eb; --primary-light: #eff6ff; --primary-dark: #1d4ed8;
       --text: #0f172a; --text-muted: #64748b; --text-light: #94a3b8;
       --danger: #ef4444; --danger-light: #fef2f2;
       --warning: #f59e0b; --warning-light: #fffbeb;
       --success: #10b981; --success-light: #ecfdf5;
+      --purple: #7c3aed; --purple-light: #f5f3ff;
       --radius: 12px; --radius-sm: 8px;
       --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.04);
       --shadow-lg: 0 8px 32px rgba(0,0,0,0.10);
@@ -46,7 +47,6 @@
 
     main { max-width: 900px; margin: 0 auto; padding: 24px 16px 80px; }
 
-    /* PERSON TABS */
     .person-tabs { display: flex; gap: 4px; background: var(--surface2); border-radius: var(--radius); padding: 4px; margin-bottom: 20px; }
     .person-tab { flex: 1; padding: 10px 8px; border: none; border-radius: var(--radius-sm); background: transparent; font-family: inherit; font-size: 14px; font-weight: 500; color: var(--text-muted); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 6px; position: relative; }
     .person-tab.active { background: var(--surface); color: var(--primary); box-shadow: var(--shadow); }
@@ -56,9 +56,8 @@
     .alert-dot { position: absolute; top: 5px; right: 5px; width: 8px; height: 8px; background: var(--danger); border-radius: 50%; display: none; }
     .alert-dot.show { display: block; }
 
-    /* VIEW TABS */
-    .view-tabs { display: flex; gap: 2px; margin-bottom: 20px; border-bottom: 2px solid var(--border); }
-    .view-tab { padding: 8px 14px; border: none; background: transparent; font-family: inherit; font-size: 14px; font-weight: 500; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.15s; display: flex; align-items: center; gap: 6px; }
+    .view-tabs { display: flex; gap: 2px; margin-bottom: 20px; border-bottom: 2px solid var(--border); overflow-x: auto; }
+    .view-tab { padding: 8px 12px; border: none; background: transparent; font-family: inherit; font-size: 13px; font-weight: 500; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.15s; white-space: nowrap; display: flex; align-items: center; gap: 5px; }
     .view-tab.active { color: var(--primary); border-bottom-color: var(--primary); }
     .view-tab-dot { width: 7px; height: 7px; background: var(--danger); border-radius: 50%; display: none; }
     .view-tab-dot.show { display: inline-block; }
@@ -68,12 +67,16 @@
 
     /* MED CARDS */
     .cards-grid { display: grid; gap: 12px; }
-    .med-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; box-shadow: var(--shadow); display: grid; grid-template-columns: 1fr auto; gap: 12px; transition: box-shadow 0.2s; animation: fadeIn 0.3s ease; }
+    .med-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; box-shadow: var(--shadow); transition: box-shadow 0.2s; animation: fadeIn 0.3s ease; }
     .med-card.urgent-card { border-left: 3px solid var(--danger); }
     .med-card.soon-card { border-left: 3px solid var(--warning); }
+    .med-card.reserve-card { border-left: 3px solid var(--purple); opacity: 0.85; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
     .med-card:hover { box-shadow: var(--shadow-lg); }
-    .med-name { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+
+    .med-card-top { display: grid; grid-template-columns: 1fr auto; gap: 12px; }
+    .med-name { font-size: 16px; font-weight: 600; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+    .reserve-badge { font-size: 11px; font-weight: 700; background: var(--purple-light); color: var(--purple); padding: 2px 8px; border-radius: 20px; border: 1px solid #ddd6fe; }
     .med-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
     .tag { display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px; border-radius: 20px; font-size: 12px; font-weight: 500; background: var(--surface2); color: var(--text-muted); border: 1px solid var(--border); }
     .tag-blue { background: var(--primary-light); color: var(--primary); border-color: #bfdbfe; }
@@ -81,13 +84,34 @@
     .tag-tarde { background: #ffedd5; color: #9a3412; border-color: #fed7aa; }
     .tag-noite { background: #ede9fe; color: #5b21b6; border-color: #ddd6fe; }
     .tag-variado { background: #f0fdf4; color: #166534; border-color: #bbf7d0; }
+    .tag-purple { background: var(--purple-light); color: var(--purple); border-color: #ddd6fe; }
+    .tag-reserve { background: var(--purple-light); color: var(--purple); border-color: #ddd6fe; }
+
+    /* STOCK DISPLAY */
+    .stock-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+    .stock-chip { display: flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+    .stock-chip.active { background: var(--success-light); color: #065f46; border: 1px solid #a7f3d0; }
+    .stock-chip.reserve { background: var(--purple-light); color: var(--purple); border: 1px solid #ddd6fe; }
+
     .next-buy { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; padding: 5px 10px; border-radius: var(--radius-sm); width: fit-content; }
     .next-buy.urgent { background: var(--danger-light); color: var(--danger); }
     .next-buy.soon { background: var(--warning-light); color: #92400e; }
     .next-buy.ok { background: var(--success-light); color: #065f46; }
-    .med-obs { font-size: 13px; color: var(--text-muted); font-style: italic; margin-top: 6px; }
-    .med-actions { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
+
+    /* PRESCRIPTION SECTION */
+    .prescription-section { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .presc-field { }
+    .presc-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-light); margin-bottom: 2px; }
+    .presc-value { font-size: 13px; color: var(--text); }
+    .presc-full { grid-column: span 2; }
+
+    .med-actions { display: flex; gap: 6px; align-items: center; flex-shrink: 0; }
     .med-actions.hidden { display: none; }
+
+    /* SECTION DIVIDER */
+    .section-divider { display: flex; align-items: center; gap: 12px; margin: 20px 0 14px; }
+    .section-divider-line { flex: 1; height: 1px; background: var(--border); }
+    .section-divider-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-muted); white-space: nowrap; }
 
     /* HORÁRIOS */
     .turno-block { margin-bottom: 24px; }
@@ -104,13 +128,13 @@
     .schedule-info { flex: 1; }
     .schedule-name { font-weight: 600; font-size: 15px; margin-bottom: 2px; }
     .schedule-detail { font-size: 13px; color: var(--text-muted); }
-    .schedule-alert { font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 20px; white-space: nowrap; }
+    .schedule-sub { font-size: 12px; color: var(--text-light); margin-top: 2px; font-style: italic; }
+    .schedule-alert { font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; }
     .schedule-alert.urgent { background: var(--danger-light); color: var(--danger); }
     .schedule-alert.soon { background: var(--warning-light); color: #92400e; }
 
     /* COMPRAS */
     .compras-header { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 16px; box-shadow: var(--shadow); display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-    .compras-header-info { flex: 1; }
     .compras-title { font-family: 'DM Serif Display', serif; font-size: 20px; margin-bottom: 2px; }
     .compras-sub { font-size: 13px; color: var(--text-muted); }
     .compras-section { margin-bottom: 20px; }
@@ -121,15 +145,14 @@
     .compra-item.is-ok { border-left: 3px solid var(--primary); }
     .compra-info { flex: 1; min-width: 0; }
     .compra-name { font-weight: 600; font-size: 15px; }
-    .compra-detail { font-size: 13px; color: var(--text-muted); margin-top: 3px; }
+    .compra-detail { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
     .compra-badge { font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; }
     .compra-badge.urgent { background: var(--danger-light); color: var(--danger); }
     .compra-badge.soon { background: var(--warning-light); color: #92400e; }
     .compra-badge.ok { background: var(--primary-light); color: var(--primary); }
 
-    /* COPY BOX */
     .copy-box { background: #f8faff; border: 1px dashed #bfdbfe; border-radius: var(--radius); padding: 16px 18px; margin-bottom: 16px; }
-    .copy-box-title { font-size: 13px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+    .copy-box-title { font-size: 13px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
     .copy-box-text { font-family: monospace; font-size: 13px; color: var(--text); line-height: 1.7; white-space: pre-wrap; background: white; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; }
 
     .empty-state { text-align: center; padding: 50px 20px; color: var(--text-muted); }
@@ -142,17 +165,28 @@
     /* MODALS */
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(15,23,42,0.5); backdrop-filter: blur(4px); z-index: 200; align-items: center; justify-content: center; padding: 16px; }
     .modal-overlay.open { display: flex; }
-    .modal { background: var(--surface); border-radius: 16px; padding: 24px; width: 100%; max-width: 480px; box-shadow: var(--shadow-lg); animation: slideUp 0.25s ease; max-height: 92vh; overflow-y: auto; }
+    .modal { background: var(--surface); border-radius: 16px; padding: 24px; width: 100%; max-width: 520px; box-shadow: var(--shadow-lg); animation: slideUp 0.25s ease; max-height: 92vh; overflow-y: auto; }
     @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     .modal-title { font-family: 'DM Serif Display', serif; font-size: 22px; margin-bottom: 18px; }
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
+
+    .form-section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-muted); margin: 16px 0 10px; display: flex; align-items: center; gap: 8px; }
+    .form-section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 4px; }
     .form-grid .span2 { grid-column: span 2; }
     .field label { display: block; font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; }
     .field input, .field select, .field textarea { width: 100%; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 9px 12px; font-family: inherit; font-size: 14px; color: var(--text); background: var(--bg); outline: none; transition: border-color 0.15s; }
     .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); background: white; }
     .field textarea { resize: vertical; min-height: 60px; }
     .field-hint { font-size: 11px; color: var(--text-light); margin-top: 3px; }
-    .modal-footer { display: flex; gap: 10px; justify-content: flex-end; }
+    .modal-footer { display: flex; gap: 10px; justify-content: flex-end; margin-top: 18px; }
+
+    /* STOCK INPUTS */
+    .stock-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .stock-input-group { background: var(--surface2); border-radius: var(--radius-sm); padding: 12px; border: 1px solid var(--border); }
+    .stock-input-group .stock-group-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
+    .stock-input-group.active-group .stock-group-label { color: var(--success); }
+    .stock-input-group.reserve-group .stock-group-label { color: var(--purple); }
 
     .pin-display { display: flex; gap: 8px; justify-content: center; margin: 16px 0; }
     .pin-dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--border); background: transparent; transition: all 0.15s; }
@@ -172,9 +206,11 @@
     @media (max-width: 600px) {
       .form-grid { grid-template-columns: 1fr; }
       .form-grid .span2 { grid-column: span 1; }
-      .med-card { grid-template-columns: 1fr; }
+      .med-card-top { grid-template-columns: 1fr; }
       .med-actions { flex-direction: row; }
-      .compras-header { flex-direction: column; align-items: flex-start; }
+      .prescription-section { grid-template-columns: 1fr; }
+      .presc-full { grid-column: span 1; }
+      .stock-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -195,7 +231,6 @@
 </header>
 
 <main>
-  <!-- PERSON TABS -->
   <div class="person-tabs">
     <button class="person-tab active" onclick="switchUser('Tânia')" id="ptab-Tânia">
       <span class="tab-avatar tania">T</span> Tânia
@@ -207,17 +242,15 @@
     </button>
   </div>
 
-  <!-- VIEW TABS -->
   <div class="view-tabs">
     <button class="view-tab active" onclick="switchView('medicamentos')" id="vtab-medicamentos">💊 Medicamentos</button>
     <button class="view-tab" onclick="switchView('horarios')" id="vtab-horarios">🕐 Horários</button>
+    <button class="view-tab" onclick="switchView('prescricao')" id="vtab-prescricao">📋 Prescrição</button>
     <button class="view-tab" onclick="switchView('compras')" id="vtab-compras">
-      🛒 Compras
-      <span class="view-tab-dot" id="compras-dot"></span>
+      🛒 Compras <span class="view-tab-dot" id="compras-dot"></span>
     </button>
   </div>
 
-  <!-- SECTION HEADER -->
   <div class="section-header" id="sectionHeader">
     <div class="section-title" id="sectionTitle">Medicamentos de Tânia</div>
     <button class="btn btn-primary btn-md" id="btnAdd" onclick="openAddModal()" style="display:none;">+ Adicionar</button>
@@ -239,15 +272,9 @@
       <div class="pin-dot" id="d4"></div><div class="pin-dot" id="d5"></div>
     </div>
     <div class="pin-keypad">
-      <button class="pin-key" onclick="pinKey('1')">1</button>
-      <button class="pin-key" onclick="pinKey('2')">2</button>
-      <button class="pin-key" onclick="pinKey('3')">3</button>
-      <button class="pin-key" onclick="pinKey('4')">4</button>
-      <button class="pin-key" onclick="pinKey('5')">5</button>
-      <button class="pin-key" onclick="pinKey('6')">6</button>
-      <button class="pin-key" onclick="pinKey('7')">7</button>
-      <button class="pin-key" onclick="pinKey('8')">8</button>
-      <button class="pin-key" onclick="pinKey('9')">9</button>
+      <button class="pin-key" onclick="pinKey('1')">1</button><button class="pin-key" onclick="pinKey('2')">2</button><button class="pin-key" onclick="pinKey('3')">3</button>
+      <button class="pin-key" onclick="pinKey('4')">4</button><button class="pin-key" onclick="pinKey('5')">5</button><button class="pin-key" onclick="pinKey('6')">6</button>
+      <button class="pin-key" onclick="pinKey('7')">7</button><button class="pin-key" onclick="pinKey('8')">8</button><button class="pin-key" onclick="pinKey('9')">9</button>
       <button class="pin-key" style="font-size:13px;color:var(--text-muted);" onclick="closePinModal()">✕</button>
       <button class="pin-key" onclick="pinKey('0')">0</button>
       <button class="pin-key" style="font-size:16px;" onclick="pinKey('del')">⌫</button>
@@ -256,19 +283,22 @@
   </div>
 </div>
 
-<!-- ADD/EDIT -->
+<!-- ADD/EDIT MODAL -->
 <div class="modal-overlay" id="medModal">
   <div class="modal">
     <div class="modal-title" id="medModalTitle">Adicionar Medicamento</div>
     <input type="hidden" id="editRow" />
+
+    <div class="form-section-title">💊 Identificação</div>
     <div class="form-grid">
       <div class="field span2">
-        <label>Medicamento *</label>
-        <input type="text" id="f-nome" placeholder="Ex: Losartana 50mg" />
+        <label>Nome do Medicamento *</label>
+        <input type="text" id="f-nome" placeholder="Ex: Quetiapina" />
+        <div class="field-hint">Use o nome base — sem dosagem (ex: só "Quetiapina", não "Quetiapina 200mg")</div>
       </div>
       <div class="field">
-        <label>Dosagem *</label>
-        <input type="text" id="f-dosagem" placeholder="Ex: 50mg" />
+        <label>Dosagem deste comprimido *</label>
+        <input type="text" id="f-dosagem" placeholder="Ex: 200mg" />
       </div>
       <div class="field">
         <label>Turno *</label>
@@ -292,21 +322,54 @@
         <input type="number" id="f-dias-semana" value="7" min="1" max="7" />
         <div class="field-hint">7 = todos os dias</div>
       </div>
-      <div class="field">
-        <label>Estoque (comprimidos) *</label>
-        <input type="number" id="f-quantidade" placeholder="Ex: 30" min="0" />
-      </div>
-      <div class="field span2">
-        <label>Previsão Próxima Compra</label>
-        <div id="previsaoCalc" style="padding:8px 12px;background:var(--surface2);border-radius:var(--radius-sm);font-size:14px;color:var(--text-muted);min-height:36px;">
-          Preencha estoque e dosagem...
+    </div>
+
+    <div class="form-section-title">📦 Estoque</div>
+    <div class="stock-grid">
+      <div class="stock-input-group active-group">
+        <div class="stock-group-label">✅ Ativo (em uso)</div>
+        <div class="field">
+          <label>Qtd. em uso</label>
+          <input type="number" id="f-quantidade" placeholder="Ex: 20" min="0" />
+          <div class="field-hint">Comprimidos sendo consumidos agora</div>
         </div>
       </div>
-      <div class="field span2">
-        <label>Observações</label>
-        <textarea id="f-obs" placeholder="Ex: Tomar com água, evitar sol..."></textarea>
+      <div class="stock-input-group reserve-group">
+        <div class="stock-group-label">🗃 Reserva</div>
+        <div class="field">
+          <label>Qtd. reserva</label>
+          <input type="number" id="f-reserva" placeholder="Ex: 0" min="0" value="0" />
+          <div class="field-hint">Caixas guardadas ainda fechadas</div>
+        </div>
       </div>
     </div>
+
+    <div style="margin-top:10px;">
+      <div id="previsaoCalc" style="padding:8px 12px;background:var(--surface2);border-radius:var(--radius-sm);font-size:14px;color:var(--text-muted);min-height:36px;">
+        Preencha estoque e dosagem para calcular...
+      </div>
+    </div>
+
+    <div class="form-section-title">📋 Prescrição</div>
+    <div class="form-grid">
+      <div class="field span2">
+        <label>Prescrito por</label>
+        <input type="text" id="f-medico" placeholder="Ex: Dr. João Silva — Psiquiatra" />
+      </div>
+      <div class="field span2">
+        <label>Posologia (como tomar)</label>
+        <textarea id="f-posologia" placeholder="Ex: Tomar 1 comprimido à noite, com água, antes de dormir"></textarea>
+      </div>
+      <div class="field span2">
+        <label>Restrições / Atenções</label>
+        <textarea id="f-restricoes" placeholder="Ex: Não tomar com álcool. Evitar dirigir após tomar. Não parar o uso sem orientação médica."></textarea>
+      </div>
+      <div class="field span2">
+        <label>Observações gerais</label>
+        <input type="text" id="f-obs" placeholder="Ex: Manter refrigerado, receita de retenção..." />
+      </div>
+    </div>
+
     <div class="modal-footer">
       <button class="btn btn-ghost btn-md" onclick="closeMedModal()">Cancelar</button>
       <button class="btn btn-primary btn-md" id="btnSave" onclick="saveMedication()">💾 Salvar</button>
@@ -347,7 +410,7 @@
     const s = String(val).trim();
     if (/^\d{2}\/\d{2}\/\d{4}$/.test(s)) return s;
     if (/^\d{4}-\d{2}-\d{2}/.test(s)) {
-      const p = s.substring(0, 10).split("-");
+      const p = s.substring(0,10).split("-");
       return `${p[2]}/${p[1]}/${p[0]}`;
     }
     const d = new Date(s);
@@ -360,7 +423,7 @@
     if (!s) return null;
     const p = s.split("/");
     if (p.length < 3) return null;
-    const d = new Date(Number(p[2]), Number(p[1]) - 1, Number(p[0]));
+    const d = new Date(Number(p[2]), Number(p[1])-1, Number(p[0]));
     if (isNaN(d)) return null;
     const today = new Date(); today.setHours(0,0,0,0);
     return Math.ceil((d - today) / 86400000);
@@ -374,11 +437,24 @@
     return            { cls: "ok",     emoji: "🟢", diff };
   }
 
+  function calcNextPurchase(qtdAtivo, qtdReserva, doseDia, diasSemana) {
+    const dose = Number(doseDia) || 0;
+    const dias = Number(diasSemana) || 7;
+    const totalEstoque = (Number(qtdAtivo)||0) + (Number(qtdReserva)||0);
+    if (!dose || !totalEstoque) return "";
+    const compPorSemana = dose * dias;
+    const diasRestantes = Math.floor((totalEstoque / compPorSemana) * 7) - 7;
+    const compra = new Date();
+    compra.setDate(compra.getDate() + Math.max(diasRestantes, 0));
+    return compra.toLocaleDateString("pt-BR");
+  }
+
   function calcQtyNeeded(med, days) {
     const dose = Number(med["Comprimidos/Dia"]) || 0;
     const diasSem = Number(med["Dias Uso/Semana"]) || 7;
     const needed = Math.ceil(dose * (diasSem / 7) * days);
-    return Math.max(0, needed - (Number(med["Quantidade Estoque"]) || 0));
+    const totalEstoque = (Number(med["Quantidade Estoque"])||0) + (Number(med["Estoque Reserva"])||0);
+    return Math.max(0, needed - totalEstoque);
   }
 
   // ===================== INIT =====================
@@ -394,7 +470,7 @@
     try {
       const res = await fetch(`${API_URL}?action=getMedications&user=${encodeURIComponent(user)}`);
       const data = await res.json();
-      if (data.success) medications[user] = (data.data || []).map(m => ({
+      if (data.success) medications[user] = (data.data||[]).map(m => ({
         ...m, "Próxima Compra": normalizeDate(m["Próxima Compra"])
       }));
     } catch(e) { medications[user] = []; }
@@ -403,17 +479,12 @@
   // ===================== ALERTS =====================
   function checkAlerts() {
     USERS.forEach(user => {
-      const has = (medications[user]||[]).some(m => { const d=getDaysUntil(m["Próxima Compra"]); return d!==null && d<=7; });
+      const has = (medications[user]||[]).some(m => { const d=getDaysUntil(m["Próxima Compra"]); return d!==null&&d<=7; });
       document.getElementById(`alert-${user}`).classList.toggle("show", has);
     });
-    // Dot na aba compras do usuário atual
-    updateComprasDot();
-  }
-
-  function updateComprasDot() {
-    const meds = medications[currentUser] || [];
-    const hasAny = meds.some(m => { const d=getDaysUntil(m["Próxima Compra"]); return d!==null && d<=30; });
-    document.getElementById("compras-dot").classList.toggle("show", hasAny);
+    const meds = medications[currentUser]||[];
+    const anyNeeded = meds.some(m => { const d=getDaysUntil(m["Próxima Compra"]); return d!==null&&d<=30; });
+    document.getElementById("compras-dot").classList.toggle("show", anyNeeded);
   }
 
   // ===================== NAVIGATION =====================
@@ -424,8 +495,7 @@
     currentView = "medicamentos";
     document.querySelectorAll(".view-tab").forEach(t => t.classList.remove("active"));
     document.getElementById("vtab-medicamentos").classList.add("active");
-    updateComprasDot();
-    render();
+    checkAlerts(); render();
   }
 
   function switchView(view) {
@@ -438,15 +508,15 @@
   // ===================== RENDER =====================
   function render() {
     const meds = medications[currentUser] || [];
-
-    // Section header: esconde título/botão na aba compras
     const isCompras = currentView === "compras";
-    document.getElementById("sectionHeader").style.display = isCompras ? "none" : "flex";
+    const isPrescricao = currentView === "prescricao";
+    document.getElementById("sectionHeader").style.display = (isCompras || isPrescricao) ? "none" : "flex";
     document.getElementById("sectionTitle").textContent = `Medicamentos de ${currentUser}`;
-    document.getElementById("btnAdd").style.display = isEditMode && !isCompras ? "inline-flex" : "none";
+    document.getElementById("btnAdd").style.display = isEditMode && !isCompras && !isPrescricao ? "inline-flex" : "none";
 
     if (currentView === "horarios") renderHorarios(meds);
     else if (currentView === "compras") renderCompras(meds);
+    else if (currentView === "prescricao") renderPrescricao(meds);
     else renderMedicamentos(meds);
   }
 
@@ -457,42 +527,158 @@
       content.innerHTML = `<div class="empty-state"><div class="empty-icon">💊</div><h3>Nenhum medicamento</h3><p>${isEditMode?'Clique em "+ Adicionar".':'Nenhum registro encontrado.'}</p></div>`;
       return;
     }
-    content.innerHTML = `<div class="cards-grid">${meds.map(m => renderMedCard(m)).join("")}</div>`;
+
+    // Separa ativos e reserva
+    // "reserva" = medicamentos onde Comprimidos/Dia == 0 (só em estoque, não em uso ativo)
+    const ativos = meds.filter(m => Number(m["Comprimidos/Dia"]) > 0);
+    const reserva = meds.filter(m => Number(m["Comprimidos/Dia"]) == 0);
+
+    let html = `<div class="cards-grid">`;
+    ativos.forEach(m => html += renderMedCard(m, false));
+    html += `</div>`;
+
+    if (reserva.length) {
+      html += `<div class="section-divider"><div class="section-divider-line"></div><div class="section-divider-label">🗃 Estoque Reserva</div><div class="section-divider-line"></div></div>`;
+      html += `<div class="cards-grid">`;
+      reserva.forEach(m => html += renderMedCard(m, true));
+      html += `</div>`;
+    }
+
+    content.innerHTML = html;
   }
 
-  function renderMedCard(med) {
-    const urgency = getUrgency(med["Próxima Compra"]);
-    const urgentClass = urgency.cls==="urgent"?"urgent-card":urgency.cls==="soon"?"soon-card":"";
+  function renderMedCard(med, isReserve) {
+    const urgency = isReserve ? { cls: "", emoji: "", diff: null } : getUrgency(med["Próxima Compra"]);
+    const urgentClass = isReserve ? "reserve-card" : urgency.cls==="urgent"?"urgent-card":urgency.cls==="soon"?"soon-card":"";
     const actionsClass = isEditMode ? "" : "hidden";
     const dateDisplay = normalizeDate(med["Próxima Compra"]);
-    const diffLabel = urgency.diff !== null ? ` (${urgency.diff > 0 ? urgency.diff+"d" : "hoje!"})` : "";
+    const diffLabel = urgency.diff !== null ? ` (${urgency.diff>0?urgency.diff+"d":"hoje!"})` : "";
     const turnMap = {"Manhã":"tag-manha","Tarde":"tag-tarde","Noite":"tag-noite","Manhã e Noite":"tag-manha","Variado":"tag-variado","3x ao dia":"tag-blue"};
     const turnCls = turnMap[med["Turno"]] || "";
+    const qtdAtivo = Number(med["Quantidade Estoque"])||0;
+    const qtdReserva = Number(med["Estoque Reserva"])||0;
+
     return `
     <div class="med-card ${urgentClass}">
-      <div>
-        <div class="med-name">💊 ${med["Medicamento"]}</div>
-        <div class="med-meta">
-          <span class="tag tag-blue">📏 ${med["Dosagem"]}</span>
-          <span class="tag ${turnCls}">🕐 ${med["Turno"]||"—"}</span>
-          <span class="tag">🔢 ${med["Comprimidos/Dia"]} comp/dia</span>
-          ${Number(med["Dias Uso/Semana"])!==7?`<span class="tag">📅 ${med["Dias Uso/Semana"]}x/sem</span>`:""}
-          <span class="tag">📦 ${med["Quantidade Estoque"]} em estoque</span>
+      <div class="med-card-top">
+        <div>
+          <div class="med-name">
+            💊 ${med["Medicamento"]} <span style="color:var(--text-muted);font-weight:400;font-size:14px;">${med["Dosagem"]}</span>
+            ${isReserve ? '<span class="reserve-badge">Reserva</span>' : ''}
+          </div>
+          <div class="med-meta">
+            ${!isReserve && med["Turno"] ? `<span class="tag ${turnCls}">🕐 ${med["Turno"]}</span>` : ""}
+            ${!isReserve ? `<span class="tag">🔢 ${med["Comprimidos/Dia"]} comp/dia</span>` : ""}
+            ${Number(med["Dias Uso/Semana"])!==7 && !isReserve ? `<span class="tag">📅 ${med["Dias Uso/Semana"]}x/sem</span>` : ""}
+            ${med["Prescrito Por"] ? `<span class="tag tag-blue">👨‍⚕️ ${med["Prescrito Por"]}</span>` : ""}
+          </div>
+          <div class="stock-row">
+            <span class="stock-chip active">✅ Ativo: ${qtdAtivo} comp.</span>
+            ${qtdReserva > 0 ? `<span class="stock-chip reserve">🗃 Reserva: ${qtdReserva} comp.</span>` : ""}
+          </div>
+          ${!isReserve && dateDisplay ? `<div class="next-buy ${urgency.cls}">🛒 Próxima compra: <strong>${dateDisplay}</strong> ${urgency.emoji}${diffLabel}</div>` : ""}
         </div>
-        ${dateDisplay?`<div class="next-buy ${urgency.cls}">🛒 Próxima compra: <strong>${dateDisplay}</strong> ${urgency.emoji}${diffLabel}</div>`:""}
-        ${med["Observações"]?`<div class="med-obs">📝 ${med["Observações"]}</div>`:""}
+        <div class="med-actions ${actionsClass}">
+          <button class="btn btn-outline btn-sm" onclick="openEditModal(${med._row})">✏️</button>
+          <button class="btn btn-danger btn-sm" onclick="openDeleteModal(${med._row},'${med["Medicamento"].replace(/'/g,"\\'")}')">🗑</button>
+        </div>
       </div>
-      <div class="med-actions ${actionsClass}">
-        <button class="btn btn-outline btn-sm" onclick="openEditModal(${med._row})">✏️</button>
-        <button class="btn btn-danger btn-sm" onclick="openDeleteModal(${med._row},'${med["Medicamento"].replace(/'/g,"\\'")}')">🗑</button>
-      </div>
+      ${med["Posologia"] ? `
+      <div class="prescription-section">
+        <div class="presc-field presc-full">
+          <div class="presc-label">📌 Posologia</div>
+          <div class="presc-value">${med["Posologia"]}</div>
+        </div>
+        ${med["Restricoes"] ? `<div class="presc-field presc-full"><div class="presc-label">⚠️ Restrições</div><div class="presc-value">${med["Restricoes"]}</div></div>` : ""}
+        ${med["Observacoes"] ? `<div class="presc-field presc-full"><div class="presc-label">📝 Obs.</div><div class="presc-value">${med["Observacoes"]}</div></div>` : ""}
+      </div>` : med["Restricoes"] || med["Observacoes"] ? `
+      <div class="prescription-section">
+        ${med["Restricoes"] ? `<div class="presc-field presc-full"><div class="presc-label">⚠️ Restrições</div><div class="presc-value">${med["Restricoes"]}</div></div>` : ""}
+        ${med["Observacoes"] ? `<div class="presc-field presc-full"><div class="presc-label">📝 Obs.</div><div class="presc-value">${med["Observacoes"]}</div></div>` : ""}
+      </div>` : ""}
     </div>`;
+  }
+
+  // ---- PRESCRIÇÃO ----
+  function renderPrescricao(meds) {
+    const content = document.getElementById("content");
+
+    // Agrupa por nome base do medicamento
+    const groups = {};
+    meds.forEach(m => {
+      const key = m["Medicamento"].trim();
+      if (!groups[key]) groups[key] = [];
+      groups[key].push(m);
+    });
+
+    if (!Object.keys(groups).length) {
+      content.innerHTML = `<div class="empty-state"><div class="empty-icon">📋</div><h3>Nenhum medicamento</h3></div>`;
+      return;
+    }
+
+    let html = `<div style="font-family:'DM Serif Display',serif;font-size:22px;margin-bottom:20px;">📋 Prescrição de ${currentUser}</div>`;
+
+    Object.entries(groups).forEach(([nome, items]) => {
+      const med = items[0]; // Pega dados de prescrição do primeiro
+      const dosagens = items.filter(m => Number(m["Comprimidos/Dia"]) > 0);
+      const totalDoseMg = dosagens.reduce((sum, m) => {
+        const mgVal = parseFloat(m["Dosagem"]);
+        return sum + (isNaN(mgVal) ? 0 : mgVal * Number(m["Comprimidos/Dia"]));
+      }, 0);
+
+      html += `
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px 22px;margin-bottom:14px;box-shadow:var(--shadow);animation:fadeIn 0.3s ease;">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px;">
+          <div>
+            <div style="font-size:18px;font-weight:700;margin-bottom:4px;">💊 ${nome}</div>
+            ${med["Prescrito Por"] ? `<div style="font-size:13px;color:var(--text-muted);">👨‍⚕️ ${med["Prescrito Por"]}</div>` : ""}
+          </div>
+          ${totalDoseMg > 0 ? `<div style="background:var(--primary-light);color:var(--primary);border:1px solid #bfdbfe;border-radius:20px;padding:4px 14px;font-size:13px;font-weight:700;white-space:nowrap;">Total: ${totalDoseMg}mg/dia</div>` : ""}
+        </div>
+
+        <!-- Apresentações -->
+        <div style="margin-bottom:12px;">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-muted);margin-bottom:8px;">Apresentações</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;">
+            ${items.map(m => `
+              <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:8px 12px;font-size:13px;">
+                <span style="font-weight:700;">${m["Dosagem"]}</span>
+                ${Number(m["Comprimidos/Dia"]) > 0
+                  ? ` · ${m["Comprimidos/Dia"]} comp/dia · ${m["Turno"]}`
+                  : ` <span style="color:var(--purple);font-size:11px;font-weight:600;">reserva</span>`}
+                <br><span style="color:var(--text-muted);font-size:11px;">Ativo: ${m["Quantidade Estoque"]} comp. ${Number(m["Estoque Reserva"])>0?`· Reserva: ${m["Estoque Reserva"]} comp.`:""}</span>
+              </div>`).join("")}
+          </div>
+        </div>
+
+        ${med["Posologia"] ? `
+        <div style="margin-bottom:10px;">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-muted);margin-bottom:4px;">📌 Posologia</div>
+          <div style="font-size:14px;color:var(--text);background:var(--surface2);padding:10px 12px;border-radius:var(--radius-sm);">${med["Posologia"]}</div>
+        </div>` : ""}
+
+        ${med["Restricoes"] ? `
+        <div style="margin-bottom:10px;">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#92400e;margin-bottom:4px;">⚠️ Restrições</div>
+          <div style="font-size:14px;color:var(--text);background:var(--warning-light);border:1px solid #fde68a;padding:10px 12px;border-radius:var(--radius-sm);">${med["Restricoes"]}</div>
+        </div>` : ""}
+
+        ${med["Observacoes"] ? `
+        <div>
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-muted);margin-bottom:4px;">📝 Observações</div>
+          <div style="font-size:14px;color:var(--text-muted);font-style:italic;">${med["Observacoes"]}</div>
+        </div>` : ""}
+      </div>`;
+    });
+
+    content.innerHTML = html;
   }
 
   // ---- HORÁRIOS ----
   function renderHorarios(meds) {
     const content = document.getElementById("content");
-    if (!meds.length) { content.innerHTML=`<div class="empty-state"><div class="empty-icon">🕐</div><h3>Nenhum medicamento</h3></div>`; return; }
+    const ativos = meds.filter(m => Number(m["Comprimidos/Dia"]) > 0);
+    if (!ativos.length) { content.innerHTML=`<div class="empty-state"><div class="empty-icon">🕐</div><h3>Nenhum medicamento em uso</h3></div>`; return; }
     const turnos = [
       {icon:"☀️",label:"Manhã",  cls:"manha",  match:t=>["Manhã","Manhã e Noite","3x ao dia"].includes(t)},
       {icon:"🌤",label:"Tarde",  cls:"tarde",  match:t=>["Tarde","3x ao dia"].includes(t)},
@@ -501,7 +687,7 @@
     ];
     let html = "";
     turnos.forEach(turno => {
-      const items = meds.filter(m => turno.match(m["Turno"]));
+      const items = ativos.filter(m => turno.match(m["Turno"]));
       if (!items.length) return;
       html += `<div class="turno-block">
         <div class="turno-header"><span class="turno-icon">${turno.icon}</span><span class="turno-label">${turno.label}</span><span class="turno-count">${items.length} remédio${items.length>1?"s":""}</span></div>`;
@@ -511,8 +697,9 @@
         html += `<div class="schedule-card">
           <div class="schedule-pill ${turno.cls}">${turno.icon}</div>
           <div class="schedule-info">
-            <div class="schedule-name">${med["Medicamento"]}</div>
-            <div class="schedule-detail">${med["Dosagem"]} · ${med["Comprimidos/Dia"]} comp${Number(med["Dias Uso/Semana"])!==7?` · ${med["Dias Uso/Semana"]}x/sem`:""}</div>
+            <div class="schedule-name">${med["Medicamento"]} <span style="color:var(--text-muted);font-weight:400;font-size:13px;">${med["Dosagem"]}</span></div>
+            <div class="schedule-detail">${med["Comprimidos/Dia"]} comp.${Number(med["Dias Uso/Semana"])!==7?` · ${med["Dias Uso/Semana"]}x/sem`:""}</div>
+            ${med["Posologia"] ? `<div class="schedule-sub">${med["Posologia"]}</div>` : ""}
           </div>
           ${alertHtml}
         </div>`;
@@ -525,26 +712,21 @@
   // ---- COMPRAS ----
   function renderCompras(meds) {
     const content = document.getElementById("content");
-
-    // Separa por urgência
-    const urgent = [], soon = [], monthly = [];
-    meds.forEach(med => {
+    const ativos = meds.filter(m => Number(m["Comprimidos/Dia"]) > 0);
+    const urgent=[], soon=[], monthly=[];
+    ativos.forEach(med => {
       const diff = getDaysUntil(med["Próxima Compra"]);
-      if (diff === null) return;
-      const entry = { ...med, _diff: diff, _qty30: calcQtyNeeded(med, 30) };
-      if (diff <= 7) urgent.push(entry);
-      else if (diff <= 14) soon.push(entry);
-      else if (diff <= 30) monthly.push(entry);
+      if (diff===null) return;
+      const entry = {...med, _diff:diff, _qty30:calcQtyNeeded(med,30)};
+      if (diff<=7) urgent.push(entry);
+      else if (diff<=14) soon.push(entry);
+      else if (diff<=30) monthly.push(entry);
     });
-
-    const allNeeded = [...urgent, ...soon, ...monthly];
-
-    // Monta texto para copiar
+    const allNeeded = [...urgent,...soon,...monthly];
     const copyText = buildCopyText(currentUser, allNeeded);
 
-    let html = `
-    <div class="compras-header">
-      <div class="compras-header-info">
+    let html = `<div class="compras-header">
+      <div>
         <div class="compras-title">🛒 Compras de ${currentUser}</div>
         <div class="compras-sub">Medicamentos que vão faltar nos próximos 30 dias</div>
       </div>
@@ -553,56 +735,32 @@
 
     if (!allNeeded.length) {
       html += `<div class="empty-state"><div class="empty-icon">✅</div><h3>Tudo em dia!</h3><p>Nenhum medicamento de ${currentUser} precisa ser comprado nos próximos 30 dias.</p></div>`;
-      content.innerHTML = html;
-      return;
+      content.innerHTML = html; return;
     }
 
-    // Caixa de preview do texto copiável
-    html += `
-    <div class="copy-box">
-      <div class="copy-box-title">📄 Prévia da lista para enviar</div>
-      <div class="copy-box-text" id="copyTextPreview">${escapeHtml(copyText)}</div>
+    html += `<div class="copy-box">
+      <div class="copy-box-title">📄 Prévia da lista</div>
+      <div class="copy-box-text">${escapeHtml(copyText)}</div>
     </div>`;
 
-    // Urgentes
-    if (urgent.length) {
-      html += `<div class="compras-section">
-        <div class="compras-section-label">🔴 Comprar agora — menos de 7 dias</div>
-        ${urgent.map(m => compraItemHTML(m, "is-urgent", "urgent")).join("")}
-      </div>`;
-    }
-
-    // Em breve
-    if (soon.length) {
-      html += `<div class="compras-section">
-        <div class="compras-section-label">🟡 Comprar em breve — até 14 dias</div>
-        ${soon.map(m => compraItemHTML(m, "is-soon", "soon")).join("")}
-      </div>`;
-    }
-
-    // Compra mensal
-    if (monthly.length) {
-      html += `<div class="compras-section">
-        <div class="compras-section-label">🔵 Compra do mês — até 30 dias</div>
-        ${monthly.map(m => compraItemHTML(m, "is-ok", "ok")).join("")}
-      </div>`;
-    }
+    if (urgent.length) html += `<div class="compras-section"><div class="compras-section-label">🔴 Comprar agora — menos de 7 dias</div>${urgent.map(m=>compraItemHTML(m,"is-urgent","urgent")).join("")}</div>`;
+    if (soon.length)   html += `<div class="compras-section"><div class="compras-section-label">🟡 Comprar em breve — até 14 dias</div>${soon.map(m=>compraItemHTML(m,"is-soon","soon")).join("")}</div>`;
+    if (monthly.length) html += `<div class="compras-section"><div class="compras-section-label">🔵 Compra do mês — até 30 dias</div>${monthly.map(m=>compraItemHTML(m,"is-ok","ok")).join("")}</div>`;
 
     content.innerHTML = html;
-
-    // Salva o texto para o botão copiar
     window._currentCopyText = copyText;
   }
 
   function compraItemHTML(m, borderCls, badgeCls) {
-    const diffTxt = m._diff <= 0 ? "hoje!" : m._diff === 1 ? "amanhã" : `em ${m._diff} dias`;
+    const diffTxt = m._diff<=0?"hoje!":m._diff===1?"amanhã":`em ${m._diff} dias`;
     const date = normalizeDate(m["Próxima Compra"]);
-    return `
-    <div class="compra-item ${borderCls}">
+    const qtdAtivo = Number(m["Quantidade Estoque"])||0;
+    const qtdReserva = Number(m["Estoque Reserva"])||0;
+    return `<div class="compra-item ${borderCls}">
       <div style="font-size:22px;flex-shrink:0;">💊</div>
       <div class="compra-info">
-        <div class="compra-name">${m["Medicamento"]}</div>
-        <div class="compra-detail">${m["Dosagem"]} · Estoque atual: ${m["Quantidade Estoque"]} comp. · Comprar ${diffTxt}</div>
+        <div class="compra-name">${m["Medicamento"]} <span style="color:var(--text-muted);font-weight:400;font-size:13px;">${m["Dosagem"]}</span></div>
+        <div class="compra-detail">Comprar ${diffTxt} · Ativo: ${qtdAtivo} comp.${qtdReserva>0?` · Reserva: ${qtdReserva} comp.`:""}</div>
       </div>
       <span class="compra-badge ${badgeCls}">${date}</span>
     </div>`;
@@ -611,145 +769,136 @@
   function buildCopyText(user, items) {
     if (!items.length) return "";
     const hoje = new Date().toLocaleDateString("pt-BR");
-    let txt = `💊 Lista de Remédios — ${user}\n`;
-    txt += `📅 Gerada em ${hoje}\n`;
-    txt += `─────────────────────\n`;
-
-    const urgent  = items.filter(m => m._diff <= 7);
-    const soon    = items.filter(m => m._diff > 7 && m._diff <= 14);
-    const monthly = items.filter(m => m._diff > 14);
-
-    function formatItem(m) {
-      const diffTxt = m._diff <= 0 ? "HOJE" : m._diff === 1 ? "amanhã" : `em ${m._diff} dias`;
-      const date = normalizeDate(m["Próxima Compra"]);
-      return `• ${m["Medicamento"]} — ${m["Dosagem"]}\n  Comprar até: ${date} (${diffTxt})`;
-    }
-
-    if (urgent.length) {
-      txt += `\n🔴 URGENTE — comprar já:\n`;
-      txt += urgent.map(formatItem).join("\n") + "\n";
-    }
-    if (soon.length) {
-      txt += `\n🟡 Em breve:\n`;
-      txt += soon.map(formatItem).join("\n") + "\n";
-    }
-    if (monthly.length) {
-      txt += `\n🔵 Compra do mês:\n`;
-      txt += monthly.map(formatItem).join("\n") + "\n";
-    }
-
-    txt += `─────────────────────\n`;
-    txt += `Total: ${items.length} medicamento${items.length>1?"s":""}`;
+    let txt = `💊 Lista de Remédios — ${user}\n📅 ${hoje}\n─────────────────────\n`;
+    const urgent  = items.filter(m=>m._diff<=7);
+    const soon    = items.filter(m=>m._diff>7&&m._diff<=14);
+    const monthly = items.filter(m=>m._diff>14);
+    const fmt = m => {
+      const diffTxt = m._diff<=0?"HOJE":m._diff===1?"amanhã":`em ${m._diff} dias`;
+      return `• ${m["Medicamento"]} ${m["Dosagem"]}\n  Comprar até: ${normalizeDate(m["Próxima Compra"])} (${diffTxt})`;
+    };
+    if (urgent.length)  txt += `\n🔴 URGENTE:\n${urgent.map(fmt).join("\n")}\n`;
+    if (soon.length)    txt += `\n🟡 Em breve:\n${soon.map(fmt).join("\n")}\n`;
+    if (monthly.length) txt += `\n🔵 Compra do mês:\n${monthly.map(fmt).join("\n")}\n`;
+    txt += `─────────────────────\nTotal: ${items.length} item${items.length>1?"s":""}`;
     return txt;
   }
 
-  function escapeHtml(str) {
-    return str.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
-  }
+  function escapeHtml(s) { return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 
   async function copyList() {
     const text = window._currentCopyText || "";
     if (!text) return;
     try {
       await navigator.clipboard.writeText(text);
-      const btn = document.getElementById("btnCopy");
-      btn.textContent = "✅ Copiado!";
-      btn.style.background = "var(--success)";
-      btn.style.color = "white";
-      setTimeout(() => {
-        btn.textContent = "📋 Copiar Lista";
-        btn.style.background = "";
-        btn.style.color = "";
-      }, 2500);
     } catch(e) {
-      // Fallback para dispositivos mais antigos
       const ta = document.createElement("textarea");
-      ta.value = text;
-      ta.style.position = "fixed"; ta.style.opacity = "0";
-      document.body.appendChild(ta);
-      ta.focus(); ta.select();
-      document.execCommand("copy");
-      document.body.removeChild(ta);
-      showToast("Lista copiada!", "success");
+      ta.value = text; ta.style.cssText = "position:fixed;opacity:0";
+      document.body.appendChild(ta); ta.focus(); ta.select();
+      document.execCommand("copy"); document.body.removeChild(ta);
     }
+    const btn = document.getElementById("btnCopy");
+    const orig = btn.textContent;
+    btn.textContent = "✅ Copiado!";
+    btn.style.cssText = "background:var(--success);color:white;";
+    setTimeout(() => { btn.textContent = orig; btn.style.cssText = ""; }, 2500);
   }
 
   // ===================== EDIT MODE =====================
-  function toggleEditMode() {
-    if (isEditMode) { isEditMode=false; updateEditUI(); } else openPinModal();
-  }
+  function toggleEditMode() { if(isEditMode){isEditMode=false;updateEditUI();}else openPinModal(); }
   function updateEditUI() {
-    document.getElementById("editBadge").classList.toggle("visible", isEditMode);
+    document.getElementById("editBadge").classList.toggle("visible",isEditMode);
     document.getElementById("btnToggleEdit").textContent = isEditMode?"🔓 Sair":"🔒 Editor";
     render();
   }
 
   // ===================== PIN =====================
-  function openPinModal() { pinValue=""; updatePinDots(); document.getElementById("pinError").textContent=""; document.getElementById("pinModal").classList.add("open"); }
-  function closePinModal() { document.getElementById("pinModal").classList.remove("open"); pinValue=""; updatePinDots(); }
-  function pinKey(k) { if(k==="del")pinValue=pinValue.slice(0,-1); else if(pinValue.length<6)pinValue+=k; updatePinDots(); if(pinValue.length===6)setTimeout(checkPin,100); }
-  function updatePinDots() { for(let i=0;i<6;i++)document.getElementById(`d${i}`).classList.toggle("filled",i<pinValue.length); }
-  function checkPin() { if(pinValue===CORRECT_PIN){isEditMode=true;closePinModal();updateEditUI();showToast("Modo edição ativado!","success");}else{document.getElementById("pinError").textContent="PIN incorreto.";pinValue="";updatePinDots();} }
+  function openPinModal(){pinValue="";updatePinDots();document.getElementById("pinError").textContent="";document.getElementById("pinModal").classList.add("open");}
+  function closePinModal(){document.getElementById("pinModal").classList.remove("open");pinValue="";updatePinDots();}
+  function pinKey(k){if(k==="del")pinValue=pinValue.slice(0,-1);else if(pinValue.length<6)pinValue+=k;updatePinDots();if(pinValue.length===6)setTimeout(checkPin,100);}
+  function updatePinDots(){for(let i=0;i<6;i++)document.getElementById(`d${i}`).classList.toggle("filled",i<pinValue.length);}
+  function checkPin(){if(pinValue===CORRECT_PIN){isEditMode=true;closePinModal();updateEditUI();showToast("Modo edição ativado!","success");}else{document.getElementById("pinError").textContent="PIN incorreto.";pinValue="";updatePinDots();}}
 
   // ===================== ADD/EDIT =====================
-  function openAddModal() { document.getElementById("medModalTitle").textContent="Adicionar Medicamento"; document.getElementById("editRow").value=""; clearForm(); document.getElementById("medModal").classList.add("open"); }
+  function openAddModal(){document.getElementById("medModalTitle").textContent="Adicionar Medicamento";document.getElementById("editRow").value="";clearForm();document.getElementById("medModal").classList.add("open");}
+
   function openEditModal(row) {
     const med=(medications[currentUser]||[]).find(m=>m._row===row); if(!med)return;
     document.getElementById("medModalTitle").textContent="Editar Medicamento";
     document.getElementById("editRow").value=row;
-    document.getElementById("f-nome").value=med["Medicamento"];
-    document.getElementById("f-dosagem").value=med["Dosagem"];
-    document.getElementById("f-turno").value=med["Turno"];
-    document.getElementById("f-dose-dia").value=med["Comprimidos/Dia"];
-    document.getElementById("f-dias-semana").value=med["Dias Uso/Semana"];
-    document.getElementById("f-quantidade").value=med["Quantidade Estoque"];
-    document.getElementById("f-obs").value=med["Observações"]||"";
+    document.getElementById("f-nome").value=med["Medicamento"]||"";
+    document.getElementById("f-dosagem").value=med["Dosagem"]||"";
+    document.getElementById("f-turno").value=med["Turno"]||"";
+    document.getElementById("f-dose-dia").value=med["Comprimidos/Dia"]||"";
+    document.getElementById("f-dias-semana").value=med["Dias Uso/Semana"]||7;
+    document.getElementById("f-quantidade").value=med["Quantidade Estoque"]||"";
+    document.getElementById("f-reserva").value=med["Estoque Reserva"]||0;
+    document.getElementById("f-medico").value=med["Prescrito Por"]||"";
+    document.getElementById("f-posologia").value=med["Posologia"]||"";
+    document.getElementById("f-restricoes").value=med["Restricoes"]||"";
+    document.getElementById("f-obs").value=med["Observacoes"]||"";
     updatePrevisao();
     document.getElementById("medModal").classList.add("open");
   }
-  function closeMedModal() { document.getElementById("medModal").classList.remove("open"); clearForm(); }
-  function clearForm() {
-    ["f-nome","f-dosagem","f-obs"].forEach(id=>document.getElementById(id).value="");
+
+  function closeMedModal(){document.getElementById("medModal").classList.remove("open");clearForm();}
+
+  function clearForm(){
+    ["f-nome","f-dosagem","f-dose-dia","f-medico","f-posologia","f-restricoes","f-obs"].forEach(id=>document.getElementById(id).value="");
     document.getElementById("f-turno").value="";
-    document.getElementById("f-dose-dia").value="";
     document.getElementById("f-dias-semana").value=7;
     document.getElementById("f-quantidade").value="";
-    document.getElementById("previsaoCalc").textContent="Preencha estoque e dosagem...";
-  }
-  function setupFormListeners() { ["f-dose-dia","f-dias-semana","f-quantidade"].forEach(id=>document.getElementById(id).addEventListener("input",updatePrevisao)); }
-  function updatePrevisao() {
-    const qtd=parseFloat(document.getElementById("f-quantidade").value);
-    const dose=parseFloat(document.getElementById("f-dose-dia").value);
-    const dias=parseFloat(document.getElementById("f-dias-semana").value)||7;
-    if(!qtd||!dose){document.getElementById("previsaoCalc").textContent="Preencha estoque e dosagem...";return;}
-    const diasRestantes=Math.floor((qtd/(dose*dias))*7)-7;
-    const compra=new Date(); compra.setDate(compra.getDate()+Math.max(diasRestantes,0));
-    const diff=Math.max(diasRestantes,0);
-    const emoji=diff<=7?"🔴":diff<=14?"🟡":"🟢";
-    document.getElementById("previsaoCalc").innerHTML=`📅 <strong>${compra.toLocaleDateString("pt-BR")}</strong> — em ${diff} dias ${emoji}`;
+    document.getElementById("f-reserva").value=0;
+    document.getElementById("previsaoCalc").textContent="Preencha estoque e dosagem para calcular...";
   }
 
-  async function saveMedication() {
+  function setupFormListeners(){["f-dose-dia","f-dias-semana","f-quantidade","f-reserva"].forEach(id=>document.getElementById(id).addEventListener("input",updatePrevisao));}
+
+  function updatePrevisao(){
+    const qtd=parseFloat(document.getElementById("f-quantidade").value)||0;
+    const reserva=parseFloat(document.getElementById("f-reserva").value)||0;
+    const dose=parseFloat(document.getElementById("f-dose-dia").value);
+    const dias=parseFloat(document.getElementById("f-dias-semana").value)||7;
+    if(!dose||(!qtd&&!reserva)){document.getElementById("previsaoCalc").textContent="Preencha estoque e dosagem para calcular...";return;}
+    const total=qtd+reserva;
+    const diasRestantes=Math.floor((total/(dose*dias))*7)-7;
+    const compra=new Date();compra.setDate(compra.getDate()+Math.max(diasRestantes,0));
+    const diff=Math.max(diasRestantes,0);
+    const emoji=diff<=7?"🔴":diff<=14?"🟡":"🟢";
+    document.getElementById("previsaoCalc").innerHTML=`📅 <strong>${compra.toLocaleDateString("pt-BR")}</strong> — em ${diff} dias ${emoji} <span style="color:var(--text-muted);font-size:12px;">(${total} comp. no total)</span>`;
+  }
+
+  async function saveMedication(){
     const nome=document.getElementById("f-nome").value.trim();
     const dosagem=document.getElementById("f-dosagem").value.trim();
     const turno=document.getElementById("f-turno").value;
-    const doseDia=document.getElementById("f-dose-dia").value;
+    const doseDia=document.getElementById("f-dose-dia").value||0;
     const diasSem=document.getElementById("f-dias-semana").value||7;
-    const qtd=document.getElementById("f-quantidade").value;
+    const qtd=document.getElementById("f-quantidade").value||0;
+    const reserva=document.getElementById("f-reserva").value||0;
+    const medico=document.getElementById("f-medico").value.trim();
+    const posologia=document.getElementById("f-posologia").value.trim();
+    const restricoes=document.getElementById("f-restricoes").value.trim();
     const obs=document.getElementById("f-obs").value.trim();
     const editRow=document.getElementById("editRow").value;
-    if(!nome||!dosagem||!turno||!doseDia||!qtd){showToast("Preencha todos os campos obrigatórios (*)","error");return;}
-    const btn=document.getElementById("btnSave"); btn.disabled=true; btn.textContent="Salvando...";
-    const params=new URLSearchParams({action:editRow?"updateMedication":"addMedication",user:currentUser,medicamento:nome,dosagem,turno,dosagem_dia:doseDia,dias_uso_semana:diasSem,quantidade:qtd,observacoes:obs});
+    if(!nome||!dosagem){showToast("Nome e dosagem são obrigatórios","error");return;}
+    const btn=document.getElementById("btnSave");btn.disabled=true;btn.textContent="Salvando...";
+    const params=new URLSearchParams({
+      action:editRow?"updateMedication":"addMedication",
+      user:currentUser,medicamento:nome,dosagem,turno,
+      dosagem_dia:doseDia,dias_uso_semana:diasSem,
+      quantidade:qtd,reserva,
+      medico,posologia,restricoes,observacoes:obs
+    });
     if(editRow)params.set("_row",editRow);
-    try {
+    try{
       const res=await fetch(`${API_URL}?${params.toString()}`);
       const data=await res.json();
       if(!data.success)throw new Error(data.error);
       closeMedModal();
       showToast(editRow?"Medicamento atualizado!":"Medicamento adicionado!","success");
-      await loadMedications(currentUser); checkAlerts(); render();
-    } catch(err){showToast("Erro ao salvar: "+err.message,"error");}
+      await loadMedications(currentUser);checkAlerts();render();
+    }catch(err){showToast("Erro: "+err.message,"error");}
     finally{btn.disabled=false;btn.textContent="💾 Salvar";}
   }
 
@@ -765,7 +914,7 @@
       if(!data.success)throw new Error(data.error);
       closeDeleteModal();showToast("Medicamento removido.","success");
       await loadMedications(currentUser);checkAlerts();render();
-    }catch(err){showToast("Erro ao remover: "+err.message,"error");}
+    }catch(err){showToast("Erro: "+err.message,"error");}
   }
 
   // ===================== TOAST =====================
