@@ -40,10 +40,13 @@
     .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
     .btn-danger { background: var(--danger-light); color: var(--danger); }
     .btn-danger:hover { background: var(--danger); color: white; }
+    .btn-green { background: var(--success-light); color: #065f46; border: 1px solid #a7f3d0; }
+    .btn-green:hover { background: var(--success); color: white; }
     .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
 
     main { max-width: 900px; margin: 0 auto; padding: 24px 16px 80px; }
 
+    /* PERSON TABS */
     .person-tabs { display: flex; gap: 4px; background: var(--surface2); border-radius: var(--radius); padding: 4px; margin-bottom: 20px; }
     .person-tab { flex: 1; padding: 10px 8px; border: none; border-radius: var(--radius-sm); background: transparent; font-family: inherit; font-size: 14px; font-weight: 500; color: var(--text-muted); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 6px; position: relative; }
     .person-tab.active { background: var(--surface); color: var(--primary); box-shadow: var(--shadow); }
@@ -53,13 +56,17 @@
     .alert-dot { position: absolute; top: 5px; right: 5px; width: 8px; height: 8px; background: var(--danger); border-radius: 50%; display: none; }
     .alert-dot.show { display: block; }
 
+    /* VIEW TABS */
     .view-tabs { display: flex; gap: 2px; margin-bottom: 20px; border-bottom: 2px solid var(--border); }
-    .view-tab { padding: 8px 14px; border: none; background: transparent; font-family: inherit; font-size: 14px; font-weight: 500; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.15s; }
+    .view-tab { padding: 8px 14px; border: none; background: transparent; font-family: inherit; font-size: 14px; font-weight: 500; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.15s; display: flex; align-items: center; gap: 6px; }
     .view-tab.active { color: var(--primary); border-bottom-color: var(--primary); }
+    .view-tab-dot { width: 7px; height: 7px; background: var(--danger); border-radius: 50%; display: none; }
+    .view-tab-dot.show { display: inline-block; }
 
     .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
     .section-title { font-family: 'DM Serif Display', serif; font-size: 24px; letter-spacing: -0.5px; }
 
+    /* MED CARDS */
     .cards-grid { display: grid; gap: 12px; }
     .med-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; box-shadow: var(--shadow); display: grid; grid-template-columns: 1fr auto; gap: 12px; transition: box-shadow 0.2s; animation: fadeIn 0.3s ease; }
     .med-card.urgent-card { border-left: 3px solid var(--danger); }
@@ -82,6 +89,7 @@
     .med-actions { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
     .med-actions.hidden { display: none; }
 
+    /* HORÁRIOS */
     .turno-block { margin-bottom: 24px; }
     .turno-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--border); }
     .turno-icon { font-size: 22px; }
@@ -100,24 +108,29 @@
     .schedule-alert.urgent { background: var(--danger-light); color: var(--danger); }
     .schedule-alert.soon { background: var(--warning-light); color: #92400e; }
 
-    .shopping-banner { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 20px; box-shadow: var(--shadow); }
-    .shopping-banner-title { font-family: 'DM Serif Display', serif; font-size: 20px; margin-bottom: 4px; }
-    .shopping-banner-sub { font-size: 13px; color: var(--text-muted); }
-    .shopping-section { margin-bottom: 24px; }
-    .shopping-section-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-muted); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
-    .shopping-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px 16px; margin-bottom: 8px; display: flex; align-items: center; gap: 12px; box-shadow: var(--shadow); }
-    .shopping-item.is-urgent { border-left: 3px solid var(--danger); }
-    .shopping-item.is-soon { border-left: 3px solid var(--warning); }
-    .shopping-item.is-monthly { border-left: 3px solid var(--primary); }
-    .shopping-info { flex: 1; min-width: 0; }
-    .shopping-name { font-weight: 600; font-size: 14px; }
-    .shopping-detail { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
-    .shopping-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
-    .shopping-qty { font-size: 13px; font-weight: 700; color: var(--primary); background: var(--primary-light); padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
-    .shopping-person { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 20px; }
-    .shopping-person.tania { background: #dbeafe; color: #1d4ed8; }
-    .shopping-person.nair { background: #fce7f3; color: #be185d; }
-    .person-group-title { font-family: 'DM Serif Display', serif; font-size: 18px; margin: 16px 0 10px; display: flex; align-items: center; gap: 8px; }
+    /* COMPRAS */
+    .compras-header { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 16px; box-shadow: var(--shadow); display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .compras-header-info { flex: 1; }
+    .compras-title { font-family: 'DM Serif Display', serif; font-size: 20px; margin-bottom: 2px; }
+    .compras-sub { font-size: 13px; color: var(--text-muted); }
+    .compras-section { margin-bottom: 20px; }
+    .compras-section-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--text-muted); margin-bottom: 10px; }
+    .compra-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px 16px; margin-bottom: 8px; display: flex; align-items: center; gap: 12px; box-shadow: var(--shadow); animation: fadeIn 0.3s ease; }
+    .compra-item.is-urgent { border-left: 3px solid var(--danger); }
+    .compra-item.is-soon { border-left: 3px solid var(--warning); }
+    .compra-item.is-ok { border-left: 3px solid var(--primary); }
+    .compra-info { flex: 1; min-width: 0; }
+    .compra-name { font-weight: 600; font-size: 15px; }
+    .compra-detail { font-size: 13px; color: var(--text-muted); margin-top: 3px; }
+    .compra-badge { font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; }
+    .compra-badge.urgent { background: var(--danger-light); color: var(--danger); }
+    .compra-badge.soon { background: var(--warning-light); color: #92400e; }
+    .compra-badge.ok { background: var(--primary-light); color: var(--primary); }
+
+    /* COPY BOX */
+    .copy-box { background: #f8faff; border: 1px dashed #bfdbfe; border-radius: var(--radius); padding: 16px 18px; margin-bottom: 16px; }
+    .copy-box-title { font-size: 13px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+    .copy-box-text { font-family: monospace; font-size: 13px; color: var(--text); line-height: 1.7; white-space: pre-wrap; background: white; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; }
 
     .empty-state { text-align: center; padding: 50px 20px; color: var(--text-muted); }
     .empty-icon { font-size: 44px; margin-bottom: 12px; }
@@ -126,6 +139,7 @@
     .spinner { width: 20px; height: 20px; border: 2px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.7s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
+    /* MODALS */
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(15,23,42,0.5); backdrop-filter: blur(4px); z-index: 200; align-items: center; justify-content: center; padding: 16px; }
     .modal-overlay.open { display: flex; }
     .modal { background: var(--surface); border-radius: 16px; padding: 24px; width: 100%; max-width: 480px; box-shadow: var(--shadow-lg); animation: slideUp 0.25s ease; max-height: 92vh; overflow-y: auto; }
@@ -160,6 +174,7 @@
       .form-grid .span2 { grid-column: span 1; }
       .med-card { grid-template-columns: 1fr; }
       .med-actions { flex-direction: row; }
+      .compras-header { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
@@ -180,6 +195,7 @@
 </header>
 
 <main>
+  <!-- PERSON TABS -->
   <div class="person-tabs">
     <button class="person-tab active" onclick="switchUser('Tânia')" id="ptab-Tânia">
       <span class="tab-avatar tania">T</span> Tânia
@@ -189,17 +205,19 @@
       <span class="tab-avatar nair">N</span> Nair
       <span class="alert-dot" id="alert-Nair"></span>
     </button>
-    <button class="person-tab" onclick="switchUser('_compras')" id="ptab-_compras">
+  </div>
+
+  <!-- VIEW TABS -->
+  <div class="view-tabs">
+    <button class="view-tab active" onclick="switchView('medicamentos')" id="vtab-medicamentos">💊 Medicamentos</button>
+    <button class="view-tab" onclick="switchView('horarios')" id="vtab-horarios">🕐 Horários</button>
+    <button class="view-tab" onclick="switchView('compras')" id="vtab-compras">
       🛒 Compras
-      <span class="alert-dot" id="alert-_compras"></span>
+      <span class="view-tab-dot" id="compras-dot"></span>
     </button>
   </div>
 
-  <div class="view-tabs" id="viewTabs">
-    <button class="view-tab active" onclick="switchView('medicamentos')" id="vtab-medicamentos">💊 Medicamentos</button>
-    <button class="view-tab" onclick="switchView('horarios')" id="vtab-horarios">🕐 Horários do Dia</button>
-  </div>
-
+  <!-- SECTION HEADER -->
   <div class="section-header" id="sectionHeader">
     <div class="section-title" id="sectionTitle">Medicamentos de Tânia</div>
     <button class="btn btn-primary btn-md" id="btnAdd" onclick="openAddModal()" style="display:none;">+ Adicionar</button>
@@ -385,11 +403,17 @@
   // ===================== ALERTS =====================
   function checkAlerts() {
     USERS.forEach(user => {
-      const has = (medications[user]||[]).some(m => { const d=getDaysUntil(m["Próxima Compra"]); return d!==null&&d<=7; });
+      const has = (medications[user]||[]).some(m => { const d=getDaysUntil(m["Próxima Compra"]); return d!==null && d<=7; });
       document.getElementById(`alert-${user}`).classList.toggle("show", has);
     });
-    const any = USERS.some(user => (medications[user]||[]).some(m => { const d=getDaysUntil(m["Próxima Compra"]); return d!==null&&d<=30; }));
-    document.getElementById("alert-_compras").classList.toggle("show", any);
+    // Dot na aba compras do usuário atual
+    updateComprasDot();
+  }
+
+  function updateComprasDot() {
+    const meds = medications[currentUser] || [];
+    const hasAny = meds.some(m => { const d=getDaysUntil(m["Próxima Compra"]); return d!==null && d<=30; });
+    document.getElementById("compras-dot").classList.toggle("show", hasAny);
   }
 
   // ===================== NAVIGATION =====================
@@ -397,14 +421,10 @@
     currentUser = user;
     document.querySelectorAll(".person-tab").forEach(t => t.classList.remove("active"));
     document.getElementById(`ptab-${user}`).classList.add("active");
-    const isCompras = user === "_compras";
-    document.getElementById("viewTabs").style.display = isCompras ? "none" : "flex";
-    document.getElementById("sectionHeader").style.display = isCompras ? "none" : "flex";
-    if (!isCompras) {
-      currentView = "medicamentos";
-      document.querySelectorAll(".view-tab").forEach(t => t.classList.remove("active"));
-      document.getElementById("vtab-medicamentos").classList.add("active");
-    }
+    currentView = "medicamentos";
+    document.querySelectorAll(".view-tab").forEach(t => t.classList.remove("active"));
+    document.getElementById("vtab-medicamentos").classList.add("active");
+    updateComprasDot();
     render();
   }
 
@@ -417,24 +437,30 @@
 
   // ===================== RENDER =====================
   function render() {
-    if (currentUser === "_compras") { renderCompras(); return; }
     const meds = medications[currentUser] || [];
+
+    // Section header: esconde título/botão na aba compras
+    const isCompras = currentView === "compras";
+    document.getElementById("sectionHeader").style.display = isCompras ? "none" : "flex";
     document.getElementById("sectionTitle").textContent = `Medicamentos de ${currentUser}`;
-    document.getElementById("btnAdd").style.display = isEditMode ? "inline-flex" : "none";
+    document.getElementById("btnAdd").style.display = isEditMode && !isCompras ? "inline-flex" : "none";
+
     if (currentView === "horarios") renderHorarios(meds);
+    else if (currentView === "compras") renderCompras(meds);
     else renderMedicamentos(meds);
   }
 
+  // ---- MEDICAMENTOS ----
   function renderMedicamentos(meds) {
     const content = document.getElementById("content");
     if (!meds.length) {
       content.innerHTML = `<div class="empty-state"><div class="empty-icon">💊</div><h3>Nenhum medicamento</h3><p>${isEditMode?'Clique em "+ Adicionar".':'Nenhum registro encontrado.'}</p></div>`;
       return;
     }
-    content.innerHTML = `<div class="cards-grid">${meds.map(m => renderMedCard(m, currentUser)).join("")}</div>`;
+    content.innerHTML = `<div class="cards-grid">${meds.map(m => renderMedCard(m)).join("")}</div>`;
   }
 
-  function renderMedCard(med, user) {
+  function renderMedCard(med) {
     const urgency = getUrgency(med["Próxima Compra"]);
     const urgentClass = urgency.cls==="urgent"?"urgent-card":urgency.cls==="soon"?"soon-card":"";
     const actionsClass = isEditMode ? "" : "hidden";
@@ -457,12 +483,13 @@
         ${med["Observações"]?`<div class="med-obs">📝 ${med["Observações"]}</div>`:""}
       </div>
       <div class="med-actions ${actionsClass}">
-        <button class="btn btn-outline btn-sm" onclick="openEditModal(${med._row},'${user}')">✏️</button>
+        <button class="btn btn-outline btn-sm" onclick="openEditModal(${med._row})">✏️</button>
         <button class="btn btn-danger btn-sm" onclick="openDeleteModal(${med._row},'${med["Medicamento"].replace(/'/g,"\\'")}')">🗑</button>
       </div>
     </div>`;
   }
 
+  // ---- HORÁRIOS ----
   function renderHorarios(meds) {
     const content = document.getElementById("content");
     if (!meds.length) { content.innerHTML=`<div class="empty-state"><div class="empty-icon">🕐</div><h3>Nenhum medicamento</h3></div>`; return; }
@@ -495,59 +522,156 @@
     content.innerHTML = html;
   }
 
-  function renderCompras() {
+  // ---- COMPRAS ----
+  function renderCompras(meds) {
     const content = document.getElementById("content");
-    const urgent=[], soon=[];
-    USERS.forEach(user => {
-      (medications[user]||[]).forEach(med => {
-        const diff = getDaysUntil(med["Próxima Compra"]);
-        if (diff===null) return;
-        const entry = {...med, _user:user, _diff:diff, _qty30:calcQtyNeeded(med,30)};
-        if (diff<=7) urgent.push(entry);
-        else if (diff<=30) soon.push(entry);
-      });
+
+    // Separa por urgência
+    const urgent = [], soon = [], monthly = [];
+    meds.forEach(med => {
+      const diff = getDaysUntil(med["Próxima Compra"]);
+      if (diff === null) return;
+      const entry = { ...med, _diff: diff, _qty30: calcQtyNeeded(med, 30) };
+      if (diff <= 7) urgent.push(entry);
+      else if (diff <= 14) soon.push(entry);
+      else if (diff <= 30) monthly.push(entry);
     });
-    const allNeeded = [...urgent,...soon];
-    let html = `<div class="shopping-banner">
-      <div class="shopping-banner-title">🛒 Lista de Compras</div>
-      <div class="shopping-banner-sub">Medicamentos que vão faltar nos próximos 30 dias · ${new Date().toLocaleDateString("pt-BR",{month:"long",year:"numeric"})}</div>
+
+    const allNeeded = [...urgent, ...soon, ...monthly];
+
+    // Monta texto para copiar
+    const copyText = buildCopyText(currentUser, allNeeded);
+
+    let html = `
+    <div class="compras-header">
+      <div class="compras-header-info">
+        <div class="compras-title">🛒 Compras de ${currentUser}</div>
+        <div class="compras-sub">Medicamentos que vão faltar nos próximos 30 dias</div>
+      </div>
+      ${allNeeded.length ? `<button class="btn btn-green btn-md" onclick="copyList()" id="btnCopy">📋 Copiar Lista</button>` : ""}
     </div>`;
+
     if (!allNeeded.length) {
-      html+=`<div class="empty-state"><div class="empty-icon">✅</div><h3>Tudo em dia!</h3><p>Nenhum medicamento precisa ser comprado nos próximos 30 dias.</p></div>`;
-      content.innerHTML=html; return;
+      html += `<div class="empty-state"><div class="empty-icon">✅</div><h3>Tudo em dia!</h3><p>Nenhum medicamento de ${currentUser} precisa ser comprado nos próximos 30 dias.</p></div>`;
+      content.innerHTML = html;
+      return;
     }
+
+    // Caixa de preview do texto copiável
+    html += `
+    <div class="copy-box">
+      <div class="copy-box-title">📄 Prévia da lista para enviar</div>
+      <div class="copy-box-text" id="copyTextPreview">${escapeHtml(copyText)}</div>
+    </div>`;
+
+    // Urgentes
     if (urgent.length) {
-      html+=`<div class="shopping-section"><div class="shopping-section-title">🔴 Urgente — menos de 7 dias</div>${urgent.map(m=>shoppingItemHTML(m,"is-urgent")).join("")}</div>`;
+      html += `<div class="compras-section">
+        <div class="compras-section-label">🔴 Comprar agora — menos de 7 dias</div>
+        ${urgent.map(m => compraItemHTML(m, "is-urgent", "urgent")).join("")}
+      </div>`;
     }
-    html+=`<div class="shopping-section"><div class="shopping-section-title">📅 Compra do Mês — próximos 30 dias</div>`;
-    USERS.forEach(user => {
-      const items = [...urgent,...soon].filter(m=>m._user===user);
-      if (!items.length) return;
-      const avatarCls = user==="Tânia"?"tania":"nair";
-      html+=`<div class="person-group-title"><span class="tab-avatar ${avatarCls}" style="width:28px;height:28px;font-size:12px;">${user[0]}</span> ${user}</div>`;
-      html+=items.map(m=>shoppingItemHTML(m,"is-monthly")).join("");
-    });
-    html+=`</div>`;
+
+    // Em breve
+    if (soon.length) {
+      html += `<div class="compras-section">
+        <div class="compras-section-label">🟡 Comprar em breve — até 14 dias</div>
+        ${soon.map(m => compraItemHTML(m, "is-soon", "soon")).join("")}
+      </div>`;
+    }
+
+    // Compra mensal
+    if (monthly.length) {
+      html += `<div class="compras-section">
+        <div class="compras-section-label">🔵 Compra do mês — até 30 dias</div>
+        ${monthly.map(m => compraItemHTML(m, "is-ok", "ok")).join("")}
+      </div>`;
+    }
+
     content.innerHTML = html;
+
+    // Salva o texto para o botão copiar
+    window._currentCopyText = copyText;
   }
 
-  function shoppingItemHTML(m, cls) {
-    const u = getUrgency(m["Próxima Compra"]);
-    const dateDisplay = normalizeDate(m["Próxima Compra"]);
-    const userCls = m._user==="Tânia"?"tania":"nair";
-    const diffTxt = m._diff<=0?"hoje!":m._diff===1?"amanhã":`em ${m._diff}d`;
-    return `<div class="shopping-item ${cls}">
-      <div style="font-size:22px;">💊</div>
-      <div class="shopping-info">
-        <div class="shopping-name">${m["Medicamento"]}</div>
-        <div class="shopping-detail">${m["Dosagem"]} · Comprar ${diffTxt} · Estoque atual: ${m["Quantidade Estoque"]}</div>
+  function compraItemHTML(m, borderCls, badgeCls) {
+    const diffTxt = m._diff <= 0 ? "hoje!" : m._diff === 1 ? "amanhã" : `em ${m._diff} dias`;
+    const date = normalizeDate(m["Próxima Compra"]);
+    return `
+    <div class="compra-item ${borderCls}">
+      <div style="font-size:22px;flex-shrink:0;">💊</div>
+      <div class="compra-info">
+        <div class="compra-name">${m["Medicamento"]}</div>
+        <div class="compra-detail">${m["Dosagem"]} · Estoque atual: ${m["Quantidade Estoque"]} comp. · Comprar ${diffTxt}</div>
       </div>
-      <div class="shopping-right">
-        ${m._qty30>0?`<span class="shopping-qty">+${m._qty30} comp.</span>`:""}
-        <span class="shopping-person ${userCls}">${m._user}</span>
-        <span style="font-size:11px;color:var(--text-muted);">${u.emoji} ${dateDisplay}</span>
-      </div>
+      <span class="compra-badge ${badgeCls}">${date}</span>
     </div>`;
+  }
+
+  function buildCopyText(user, items) {
+    if (!items.length) return "";
+    const hoje = new Date().toLocaleDateString("pt-BR");
+    let txt = `💊 Lista de Remédios — ${user}\n`;
+    txt += `📅 Gerada em ${hoje}\n`;
+    txt += `─────────────────────\n`;
+
+    const urgent  = items.filter(m => m._diff <= 7);
+    const soon    = items.filter(m => m._diff > 7 && m._diff <= 14);
+    const monthly = items.filter(m => m._diff > 14);
+
+    function formatItem(m) {
+      const diffTxt = m._diff <= 0 ? "HOJE" : m._diff === 1 ? "amanhã" : `em ${m._diff} dias`;
+      const date = normalizeDate(m["Próxima Compra"]);
+      return `• ${m["Medicamento"]} — ${m["Dosagem"]}\n  Comprar até: ${date} (${diffTxt})`;
+    }
+
+    if (urgent.length) {
+      txt += `\n🔴 URGENTE — comprar já:\n`;
+      txt += urgent.map(formatItem).join("\n") + "\n";
+    }
+    if (soon.length) {
+      txt += `\n🟡 Em breve:\n`;
+      txt += soon.map(formatItem).join("\n") + "\n";
+    }
+    if (monthly.length) {
+      txt += `\n🔵 Compra do mês:\n`;
+      txt += monthly.map(formatItem).join("\n") + "\n";
+    }
+
+    txt += `─────────────────────\n`;
+    txt += `Total: ${items.length} medicamento${items.length>1?"s":""}`;
+    return txt;
+  }
+
+  function escapeHtml(str) {
+    return str.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  }
+
+  async function copyList() {
+    const text = window._currentCopyText || "";
+    if (!text) return;
+    try {
+      await navigator.clipboard.writeText(text);
+      const btn = document.getElementById("btnCopy");
+      btn.textContent = "✅ Copiado!";
+      btn.style.background = "var(--success)";
+      btn.style.color = "white";
+      setTimeout(() => {
+        btn.textContent = "📋 Copiar Lista";
+        btn.style.background = "";
+        btn.style.color = "";
+      }, 2500);
+    } catch(e) {
+      // Fallback para dispositivos mais antigos
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.focus(); ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      showToast("Lista copiada!", "success");
+    }
   }
 
   // ===================== EDIT MODE =====================
@@ -569,8 +693,8 @@
 
   // ===================== ADD/EDIT =====================
   function openAddModal() { document.getElementById("medModalTitle").textContent="Adicionar Medicamento"; document.getElementById("editRow").value=""; clearForm(); document.getElementById("medModal").classList.add("open"); }
-  function openEditModal(row, user) {
-    const med=(medications[user]||[]).find(m=>m._row===row); if(!med)return;
+  function openEditModal(row) {
+    const med=(medications[currentUser]||[]).find(m=>m._row===row); if(!med)return;
     document.getElementById("medModalTitle").textContent="Editar Medicamento";
     document.getElementById("editRow").value=row;
     document.getElementById("f-nome").value=med["Medicamento"];
@@ -604,6 +728,7 @@
     const emoji=diff<=7?"🔴":diff<=14?"🟡":"🟢";
     document.getElementById("previsaoCalc").innerHTML=`📅 <strong>${compra.toLocaleDateString("pt-BR")}</strong> — em ${diff} dias ${emoji}`;
   }
+
   async function saveMedication() {
     const nome=document.getElementById("f-nome").value.trim();
     const dosagem=document.getElementById("f-dosagem").value.trim();
