@@ -203,6 +203,12 @@
     .toast.success { background: var(--success); }
     .toast.error { background: var(--danger); }
 
+
+    /* COMPRA DEST BUTTONS */
+    .compra-dest-btn { display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 8px;border:2px solid var(--border);border-radius:var(--radius-sm);background:var(--surface2);cursor:pointer;transition:all 0.15s;font-family:inherit; }
+    .compra-dest-btn.active { border-color:var(--success);background:var(--success-light); }
+    .compra-dest-btn:hover { border-color:var(--primary); }
+
     @media (max-width: 600px) {
       .form-grid { grid-template-columns: 1fr; }
       .form-grid .span2 { grid-column: span 1; }
@@ -386,6 +392,43 @@
     <div style="display:flex;gap:10px;justify-content:center;">
       <button class="btn btn-outline btn-md" onclick="closeDeleteModal()">Cancelar</button>
       <button class="btn btn-danger btn-md" onclick="confirmDelete()">Remover</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- COMPRA MODAL -->
+<div class="modal-overlay" id="compraModal">
+  <div class="modal" style="max-width:380px;">
+    <div class="modal-title">🛍️ Informar Compra</div>
+    <div id="compraMedName" style="font-size:15px;color:var(--text-muted);margin-bottom:20px;"></div>
+
+    <div class="field" style="margin-bottom:16px;">
+      <label>Quantidade comprada (comprimidos) *</label>
+      <input type="number" id="c-qtd" placeholder="Ex: 30" min="1" style="width:100%;border:1px solid var(--border);border-radius:var(--radius-sm);padding:9px 12px;font-family:inherit;font-size:14px;color:var(--text);background:var(--bg);outline:none;" />
+    </div>
+
+    <div class="field" style="margin-bottom:20px;">
+      <label>Onde entram esses comprimidos?</label>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px;">
+        <button class="compra-dest-btn active" id="destAtivo" onclick="selectDest('ativo')">
+          <span style="font-size:20px;">✅</span>
+          <span style="font-size:13px;font-weight:600;">Estoque Ativo</span>
+          <span style="font-size:11px;color:var(--text-muted);">Em uso agora</span>
+        </button>
+        <button class="compra-dest-btn" id="destReserva" onclick="selectDest('reserva')">
+          <span style="font-size:20px;">🗃</span>
+          <span style="font-size:13px;font-weight:600;">Reserva</span>
+          <span style="font-size:11px;color:var(--text-muted);">Guardar para depois</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="compraPreview" style="background:var(--surface2);border-radius:var(--radius-sm);padding:10px 14px;font-size:13px;color:var(--text-muted);margin-bottom:18px;min-height:36px;"></div>
+
+    <div class="modal-footer">
+      <button class="btn btn-ghost btn-md" onclick="closeCompraModal()">Cancelar</button>
+      <button class="btn btn-green btn-md" id="btnConfirmCompra" onclick="confirmCompra()">✅ Confirmar</button>
     </div>
   </div>
 </div>
@@ -579,6 +622,7 @@
           ${!isReserve && dateDisplay ? `<div class="next-buy ${urgency.cls}">🛒 Próxima compra: <strong>${dateDisplay}</strong> ${urgency.emoji}${diffLabel}</div>` : ""}
         </div>
         <div class="med-actions ${actionsClass}">
+          <button class="btn btn-green btn-sm" onclick="openCompraModal(${med._row})" title="Informar compra">🛍️</button>
           <button class="btn btn-outline btn-sm" onclick="openEditModal(${med._row})">✏️</button>
           <button class="btn btn-danger btn-sm" onclick="openDeleteModal(${med._row},'${med["Medicamento"].replace(/'/g,"\\'")}')">🗑</button>
         </div>
@@ -915,6 +959,113 @@
       closeDeleteModal();showToast("Medicamento removido.","success");
       await loadMedications(currentUser);checkAlerts();render();
     }catch(err){showToast("Erro: "+err.message,"error");}
+  }
+
+
+  // ===================== COMPRA MODAL =====================
+  let compraTarget = null;
+  let compraDest = "ativo";
+
+  function openCompraModal(row) {
+    const med = (medications[currentUser]||[]).find(m => m._row === row);
+    if (!med) return;
+    compraTarget = row;
+    compraDest = "ativo";
+    document.getElementById("compraMedName").textContent =
+      `💊 ${med["Medicamento"]} ${med["Dosagem"]}`;
+    document.getElementById("c-qtd").value = "";
+    document.getElementById("compraPreview").textContent = "Digite a quantidade para ver o resumo...";
+    selectDest("ativo");
+    document.getElementById("compraModal").classList.add("open");
+    document.getElementById("c-qtd").addEventListener("input", updateCompraPreview);
+  }
+
+  function closeCompraModal() {
+    document.getElementById("compraModal").classList.remove("open");
+    compraTarget = null;
+  }
+
+  function selectDest(dest) {
+    compraDest = dest;
+    document.getElementById("destAtivo").classList.toggle("active", dest === "ativo");
+    document.getElementById("destReserva").classList.toggle("active", dest === "reserva");
+    updateCompraPreview();
+  }
+
+  function updateCompraPreview() {
+    const med = (medications[currentUser]||[]).find(m => m._row === compraTarget);
+    if (!med) return;
+    const qtd = parseInt(document.getElementById("c-qtd").value) || 0;
+    if (!qtd) { document.getElementById("compraPreview").textContent = "Digite a quantidade para ver o resumo..."; return; }
+
+    const qtdAtivo   = Number(med["Quantidade Estoque"]) || 0;
+    const qtdReserva = Number(med["Estoque Reserva"]) || 0;
+    const novoAtivo   = compraDest === "ativo"   ? qtdAtivo + qtd   : qtdAtivo;
+    const novaReserva = compraDest === "reserva" ? qtdReserva + qtd : qtdReserva;
+    const dose = Number(med["Comprimidos/Dia"]) || 0;
+    const dias = Number(med["Dias Uso/Semana"]) || 7;
+
+    let preview = compraDest === "ativo"
+      ? `✅ Ativo: ${qtdAtivo} → ${novoAtivo} comp.`
+      : `🗃 Reserva: ${qtdReserva} → ${novaReserva} comp.`;
+
+    if (dose > 0) {
+      const total = novoAtivo + novaReserva;
+      const diasDura = Math.floor((total / (dose * dias)) * 7);
+      const proxCompra = new Date();
+      proxCompra.setDate(proxCompra.getDate() + Math.max(diasDura - 7, 0));
+      preview += `
+📅 Próxima compra: ${proxCompra.toLocaleDateString("pt-BR")} (dura ${diasDura}d)`;
+    }
+
+    document.getElementById("compraPreview").style.whiteSpace = "pre-line";
+    document.getElementById("compraPreview").textContent = preview;
+  }
+
+  async function confirmCompra() {
+    const qtd = parseInt(document.getElementById("c-qtd").value);
+    if (!qtd || qtd < 1) { showToast("Digite uma quantidade válida", "error"); return; }
+
+    const med = (medications[currentUser]||[]).find(m => m._row === compraTarget);
+    if (!med) return;
+
+    const btn = document.getElementById("btnConfirmCompra");
+    btn.disabled = true; btn.textContent = "Salvando...";
+
+    const qtdAtivo   = Number(med["Quantidade Estoque"]) || 0;
+    const qtdReserva = Number(med["Estoque Reserva"]) || 0;
+    const novoAtivo   = compraDest === "ativo"   ? qtdAtivo + qtd   : qtdAtivo;
+    const novaReserva = compraDest === "reserva" ? qtdReserva + qtd : qtdReserva;
+
+    const params = new URLSearchParams({
+      action: "updateMedication",
+      user: currentUser,
+      medicamento: med["Medicamento"],
+      dosagem: med["Dosagem"],
+      turno: med["Turno"] || "",
+      dosagem_dia: med["Comprimidos/Dia"],
+      dias_uso_semana: med["Dias Uso/Semana"],
+      quantidade: novoAtivo,
+      reserva: novaReserva,
+      medico: med["Prescrito Por"] || "",
+      posologia: med["Posologia"] || "",
+      restricoes: med["Restricoes"] || "",
+      observacoes: med["Observacoes"] || "",
+      _row: compraTarget
+    });
+
+    try {
+      const res  = await fetch(`${API_URL}?${params.toString()}`);
+      const data = await res.json();
+      if (!data.success) throw new Error(data.error);
+      closeCompraModal();
+      showToast("Compra registrada! Estoque atualizado ✅", "success");
+      await loadMedications(currentUser); checkAlerts(); render();
+    } catch(err) {
+      showToast("Erro: " + err.message, "error");
+    } finally {
+      btn.disabled = false; btn.textContent = "✅ Confirmar";
+    }
   }
 
   // ===================== TOAST =====================
